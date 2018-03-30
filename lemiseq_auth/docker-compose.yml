@@ -1,0 +1,11 @@
+version: '2'
+
+services:
+  lemiseq_auth:
+    build: .
+    tty: true
+    volumes:
+      - ./:/src
+    command: bash -c 'sleep 30s && python service.py'
+    ports:
+      - 5000:5000
