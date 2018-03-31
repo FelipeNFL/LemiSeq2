@@ -1,0 +1,43 @@
+DESCRIPTION
+
+Lemiseq_auth is the Lemi-Seq 2 authentication service. It is a RestFUL API responsible
+for verifying the credentials of a user and password and, if the data is correct, generating
+a JWT token to be used for authentication of the others Lemi-Seq 2 services . By default,
+the JWT token must be passed through the request headers. Every service must have a copy of
+the security key defined in the environment variables for that service.
+
+Lemi-Seq 2 is a system developed for use at the Federal University of São Paulo. There, the
+login is done on the intranet through the LDAP protocol.
+
+However, this piece of software was designed to be as generic as possible. So, any other form
+of login verification (even a txt!) Can be used, as long as the check class implements the
+abstract class Authenticator. The RequestToken class reads only the "interface" of the
+current authentication class. Therefore, as long as the validate() method is implemented,
+everything will work perfectly.
+
+In addition, using docker allows a container with any database to be installed easily. With a
+few more lines of code, you can easily couple it to the RequestToken class.
+
+OPERATION
+
+The API has two endpoints:
+
+/health to check the status of the service
+/token to validate the login data and generate the token
+
+To acquire the token, it is necessary to make a GET by passing a JSON in the body of the request
+with the structure {'username': 'test', 'password': 'test'}. The return is a JSON {'token': 'key'}.
+
+RUNNING SYSTEM
+
+To run the system, you must have docker and docker-compose installed on your machine. To run the
+system, simply run the "docker-compose up --build" command. All dependencies will be downloaded
+and configured in a virtual machine. The container can be accessed through the address
+http://localhost:5000 (or any other port, according to the configuration of your files
+infra/lemiseq_auth.env, docker-compose.yml and Dockerfile).
+
+You can access the bash of the container through the command "docker ps". It lists all active
+containers. Just copy the hash that was listed and run the command "docker exec -it YOUR_HASH bash".
+
+Inside the container, tests can be run with the commands "python test/functional/__ init__.py"
+and "python test/unit/__ init__.py"

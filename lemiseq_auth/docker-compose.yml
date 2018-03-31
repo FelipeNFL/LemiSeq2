@@ -9,3 +9,5 @@ services:
     command: bash -c 'sleep 30s && python service.py'
     ports:
       - 5000:5000
+    env_file:
+    - ./infra/lemiseq_auth.env
