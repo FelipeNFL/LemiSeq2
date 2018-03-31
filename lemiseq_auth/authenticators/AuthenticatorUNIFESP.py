@@ -3,6 +3,7 @@ import sys
 sys.path.append('authenticators')
 
 import hashlib
+import logging
 from ldap3 import Server, Connection
 from ldap3.core.exceptions import LDAPSocketOpenError
 from Authenticator import Authenticator

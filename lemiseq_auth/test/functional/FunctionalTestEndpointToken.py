@@ -40,7 +40,7 @@ class FunctionalTestEndpointToken(unittest.TestCase):
 
     def test_invalid_json(self):
 
-        res = requests.get(self.url, json={})
+        res = requests.get(self.url, json={'teste':'teste'})
 
         self.assertEqual(res.text, 'the request body is not a valid')
         self.assertEqual(res.status_code, 400)
