@@ -1,8 +1,9 @@
+import json
 import jwt
 from flask_restful import Resource
 from flask import request, Response
 from commom import defines
-from authenticators import Authenticator
+from authenticators.Authenticator import Authenticator
 
 class RequestToken(Resource):
 
@@ -11,28 +12,34 @@ class RequestToken(Resource):
         if 'authenticator' not in kwargs:
             raise ValueError('authenticator must be defined')
 
-        authenticator_obj = kwargs['authenticator']
-
-        if not issubclass(type(authenticator_obj), Authenticator):
-            raise TypeError('authenticator must be a Authenticator instance, '\
-                            'not {type}'.format(type(authenticator_obj)))
-
-        self._authenticator = authenticator_obj
+        authenticator = kwargs['authenticator']
+        self._authenticator = authenticator
 
     def get(self):
 
         body_request = request.json
 
-        if 'username' or 'password' not in request.json:
+        if not body_request:
+
+            return Response('the request body cannot null',
+                             status=400,
+                             mimetype='application/json')
+
+        if 'username' not in body_request or 'password' not in body_request:
 
             return Response('the request body is not a valid',
                              status=400,
                              mimetype='application/json')
 
-        username = request.json['username']
-        password = request.json['password']
+        username = body_request['username']
+        password = body_request['password']
 
-        if not self._authenticator.validate(username, password):
+        try:
+            validate = self._authenticator.validate(username, password)
+        except Exception as e:
+            return Response(str(e), status=500)
+
+        if not validate:
 
             return Response('password or username invalid',
                             status=400,
@@ -42,6 +49,6 @@ class RequestToken(Resource):
                             defines._SECRET_KEY_,
                             algorithm='HS256')
 
-        return Response({'token': token},
-                        status=200,
-                        mimetype='application/json')
+        data = json.dumps({'token': token.decode()})
+
+        return Response(data, status=200, mimetype='application/json')
