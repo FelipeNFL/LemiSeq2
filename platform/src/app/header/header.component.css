@@ -1,0 +1,62 @@
+
+hr {
+    width: 50%;
+    border: 0;
+    height: 1px;
+    background-image: linear-gradient(to right, rgba(0, 0, 0, 0), #ffffff, rgba(0, 0, 0, 0));
+}
+
+.header {
+    padding-left: 20px;
+    padding-top: 20px;
+    padding-bottom: 10px;
+    background-color: rgb(33, 90, 54);
+    color: #ffffff;
+}
+
+.title {
+    font-size: 1em;
+    text-align: center;
+    font-family: 'Cinzel';
+    margin: 0px;
+}
+
+.title > p {
+    margin: 10px;
+}
+
+.title-application {
+    margin: 0px;
+    font-size: 1.5em;
+}
+
+.logo-epm {
+    float: left;
+    width: 90px;
+    height: 140px;
+}
+
+.logo-unifesp {
+    width: 170px;
+    height: 102px;
+    vertical-align: middle;
+}
+
+.menu {
+    background: -webkit-linear-gradient(top,#839690 0%,#3C6650 100%);
+    height: 30px;
+    color: #ffffff;
+    padding-top: 10px;
+}
+
+.menu > ul {
+    padding:0px;
+    margin:0px;
+    list-style:none;
+}
+
+.menu > ul li {
+    vertical-align: middle;
+    display: inline;
+    padding-left: 40px;
+}
