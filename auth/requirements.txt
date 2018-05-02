@@ -1,0 +1,6 @@
+flask
+flask_restful
+pyjwt
+ldap3
+requests
+flask-cors
