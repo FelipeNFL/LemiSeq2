@@ -14,6 +14,6 @@ CORS(app)
 
 api = Api(app)
 api.add_resource(ServiceHealth, '/health', methods=['GET'])
-api.add_resource(RequestToken, '/token', resource_class_kwargs=params_api, methods=['GET'])
+api.add_resource(RequestToken, '/token', resource_class_kwargs=params_api, methods=['POST'])
 
 app.run(host=defines._AUTH_HOST_, port=defines._AUTH_PORT_, debug=True)

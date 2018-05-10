@@ -15,7 +15,7 @@ class RequestToken(Resource):
         authenticator = kwargs['authenticator']
         self._authenticator = authenticator
 
-    def get(self):
+    def post(self):
 
         body_request = request.json
 
