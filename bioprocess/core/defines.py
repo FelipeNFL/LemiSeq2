@@ -8,7 +8,7 @@ def get_environment_variable(variable_name):
     variable = os.environ.get(variable_name)
 
     if not variable:
-        logging.error('{} environment variable is not defined')
+        logging.error('{} environment variable is not defined'.format(variable_name))
         logging.info('The service will be shutdown')
         sys.exit()
 

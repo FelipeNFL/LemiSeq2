@@ -25,3 +25,5 @@ services:
     - ./infra/bioprocess.env
     networks:
     - lemiseqnet
+    depends_on:
+    - mysql
