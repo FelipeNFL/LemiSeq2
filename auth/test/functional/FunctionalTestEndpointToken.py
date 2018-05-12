@@ -24,7 +24,7 @@ class FunctionalTestEndpointToken(unittest.TestCase):
 
     def test_get_token(self):
 
-        res = requests.get(self.url, json=self.data)
+        res = requests.post(self.url, json=self.data)
         data = jwt.decode(res.json()['token'],
                           defines._SECRET_KEY_,
                           algorithms=['HS256'])
@@ -34,7 +34,7 @@ class FunctionalTestEndpointToken(unittest.TestCase):
 
     def test_login_invalid(self):
 
-        res = requests.get(self.url, json={'username': 'teste',
+        res = requests.post(self.url, json={'username': 'teste',
                                            'password': 'teste'})
 
         self.assertEqual(res.text, 'password or username invalid')
@@ -42,14 +42,14 @@ class FunctionalTestEndpointToken(unittest.TestCase):
 
     def test_invalid_json(self):
 
-        res = requests.get(self.url, json={'teste':'teste'})
+        res = requests.post(self.url, json={'teste':'teste'})
 
         self.assertEqual(res.text, 'the request body is not a valid')
         self.assertEqual(res.status_code, 400)
 
     def test_empty_json(self):
 
-        res = requests.get(self.url)
+        res = requests.post(self.url)
         self.assertEqual(res.status_code, 400)
         self.assertEqual(res.text, 'the request body cannot null')
 

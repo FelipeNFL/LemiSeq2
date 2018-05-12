@@ -1,4 +1,4 @@
-FROM python:latest
+FROM python:3
 
 RUN ["apt-get", "update"]
 RUN mkdir -p /src
