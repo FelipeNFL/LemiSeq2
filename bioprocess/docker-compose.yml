@@ -1,0 +1,27 @@
+version: '2'
+
+networks:
+  lemiseqnet:
+    driver: bridge
+
+services:
+  mysql:
+    image: mysql
+    restart: always
+    env_file:
+    - ./infra/mysql.env
+    networks:
+    - lemiseqnet
+    ports:
+    - 3306:3306
+  bioprocess:
+    build: .
+    command: bash -c 'python service.py'
+    ports:
+    - 5000:5000
+    volumes:
+    - ./:/src
+    env_file:
+    - ./infra/bioprocess.env
+    networks:
+    - lemiseqnet
