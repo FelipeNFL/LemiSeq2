@@ -1,4 +1,6 @@
 import { Component } from '@angular/core'
+import { ChromPackService } from '../../services/chrompack.service';
+import 
 
 @Component({
     selector: 'upload',
@@ -10,10 +12,31 @@ import { Component } from '@angular/core'
 export class UploadComponent {
     
     _title: any;
-    _file: any;
+    fileList: FileList;
+    showMessageError: boolean = false;
+    showMessageSuccess: boolean = false;
+    messageError: string;
+     
+    constructor(private chromPackService: ChromPackService) { }
 
-    onSubmit(){
-        console.log(this._title);
-        console.log(this._file);
+    fileChange(event) {
+        this.fileList = event.target.files;
+    }
+
+    upload(){
+
+        if(this._title == null) {
+            this.showMessageError = true;
+            this.messageError = 'The title was not informed';
+            return;
+        }
+
+        if(this.fileList == null) {
+            this.showMessageError = true;
+            this.messageError = 'The file was not selected';
+            return;
+        }
+
+        this.chromPackService.upload(this._title, this.fileList);
     }
 }

@@ -1,8 +1,8 @@
 <div class="option-menu">
-    <form>
-        <h1>UPLOAD</h1>
-        <p><input type="text" placeholder="Title"></p>
-        <p><input type="file" value="aaa" /></p>
-        <input type="submit" value="OK">
-    </form>
+    <h1>UPLOAD</h1>
+    <div class="alert alert-success" *ngIf="showMessageSuccess"><strong>Sucess!</strong> Your file was uploaded</div>
+    <div class="alert alert-danger" *ngIf="showMessageError"><strong>Danger!</strong> {{messageError}}</div>
+    <p><input type="text" placeholder="Title" [(ngModel)]="_title"></p>
+    <p><input type="file" (change)="fileChange($event)" accept=".zip"/></p>
+    <p><button (click)="upload()">OK</button></p>
 </div>
