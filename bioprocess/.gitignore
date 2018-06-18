@@ -3,3 +3,11 @@ venv/
 
 #IDE
 .idea/
+
+#data application
+data/
+
+#Python binaries files
+__pycache__/
+*.py[cod]
+*$py.class

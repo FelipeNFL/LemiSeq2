@@ -5,15 +5,13 @@ networks:
     driver: bridge
 
 services:
-  mysql:
-    image: mysql
-    restart: always
-    env_file:
-    - ./infra/mysql.env
-    networks:
-    - lemiseqnet
+  mongo:
+    image: aashreys/mongo-auth:latest
     ports:
-    - 3306:3306
+      - 27021:27017
+    env_file: ./infra/mongo.env
+    networks:
+      - lemiseqnet
   bioprocess:
     build: .
     command: bash -c 'python service.py'
@@ -26,4 +24,4 @@ services:
     networks:
     - lemiseqnet
     depends_on:
-    - mysql
+    - mongo

@@ -1,6 +1,5 @@
 import { Component } from '@angular/core'
 import { ChromPackService } from '../../services/chrompack.service';
-import 
 
 @Component({
     selector: 'upload',

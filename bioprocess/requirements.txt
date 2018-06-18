@@ -1,4 +1,7 @@
+pymongo
 flask
 flask_restful
 flask_cors
 mysqlclient
+SQLAlchemy
+werkzeug

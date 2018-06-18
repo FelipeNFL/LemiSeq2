@@ -44,9 +44,10 @@ hr {
 
 .menu {
     background: -webkit-linear-gradient(top,#839690 0%,#3C6650 100%);
-    height: 30px;
+    height: 45px;
     color: #ffffff;
     padding-top: 10px;
+    padding-bottom: 10px;
 }
 
 .menu > ul {

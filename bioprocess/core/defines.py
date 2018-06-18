@@ -15,10 +15,16 @@ def get_environment_variable(variable_name):
     return variable
 
 
-MYSQL_HOST = get_environment_variable('MYSQL_HOST')
-MYSQL_PORT = get_environment_variable('MYSQL_PORT')
-MYSQL_USER = get_environment_variable('MYSQL_USERNAME')
-MYSQL_PASS = get_environment_variable('MYSQL_PASSWORD')
-MYSQL_DB = get_environment_variable('MYSQL_DATABASE')
+MONGO_HOST = get_environment_variable('MONGO_HOST')
+MONGO_PORT = int(get_environment_variable('MONGO_PORT'))
+MONGO_USER = get_environment_variable('MONGO_USERNAME')
+MONGO_PASS = get_environment_variable('MONGO_PASSWORD')
+MONGO_DB = get_environment_variable('MONGO_DATABASE')
+
 BIOPROCESS_HOST = get_environment_variable('BIOPROCESS_HOST')
 BIOPROCESS_PORT = get_environment_variable('BIOPROCESS_PORT')
+
+DATA_PATH = 'data'
+
+DATA_CHROMPACK = DATA_PATH + '/chrompack'
+DATA_SAMPLE = DATA_PATH + '/samplepool'
