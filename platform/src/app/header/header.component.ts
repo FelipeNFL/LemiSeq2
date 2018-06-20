@@ -1,4 +1,5 @@
 import { Component } from '@angular/core'
+import { AuthService } from '../services/auth.service';
 
 @Component({
     selector: 'header',
@@ -10,4 +11,12 @@ import { Component } from '@angular/core'
 
 export class HeaderComponent {
     title: 'header'
+
+    constructor(private authService: AuthService) { }
+
+    logout() {
+        this.authService.logout();
+        //TODO redirect to LoginComponent
+    }
+
 }

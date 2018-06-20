@@ -8,10 +8,12 @@ import { RouterModule } from '@angular/router';
 import { LoginComponent } from './login/login.component';
 import { UploadComponent } from './upload/upload.component';
 
-import { ChromPackService } from '../services/chrompack.service';
-
-import { appRoutes } from './routes';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AuthService } from './services/auth.service';
+import { ChromPackService } from './services/chrompack.service';
+import { AuthGuard } from './authentication/auth.guard';
+import { AppRoutingModule } from './app-routing.module';
+import { AuthInterceptor } from './authentication/auth-interceptor';
 
 @NgModule({
   declarations: [
@@ -24,11 +26,18 @@ import { HttpClientModule } from '@angular/common/http';
     BrowserModule,
     HttpClientModule,
     FormsModule,
-    RouterModule.forRoot(appRoutes)
+    AppRoutingModule
   ],
   bootstrap: [AppComponent],
   providers: [
     ChromPackService,
+    AuthService,
+    AuthGuard,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true,
+    },
   ]
 })
 export class AppModule { }

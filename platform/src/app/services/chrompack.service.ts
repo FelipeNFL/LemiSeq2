@@ -1,8 +1,8 @@
-import { Injectable, Injector, Inject } from '@angular/core';
+import { Injectable } from '@angular/core';
 
-import { environment } from '../environments/environment';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { RequestOptions, Headers } from '@angular/http';
+import { environment } from '../../environments/environment';
 
 @Injectable()
 export class ChromPackService {

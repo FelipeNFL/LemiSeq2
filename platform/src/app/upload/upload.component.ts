@@ -1,5 +1,5 @@
 import { Component } from '@angular/core'
-import { ChromPackService } from '../../services/chrompack.service';
+import { ChromPackService } from '../services/chrompack.service';
 
 @Component({
     selector: 'upload',
@@ -9,7 +9,7 @@ import { ChromPackService } from '../../services/chrompack.service';
     ]
 })
 export class UploadComponent {
-    
+    //TODO consertar logo da UNIFESP
     _title: any;
     fileList: FileList;
     showMessageError: boolean = false;
@@ -24,13 +24,13 @@ export class UploadComponent {
 
     upload(){
 
-        if(this._title == null) {
+        if(!this._title) {
             this.showMessageError = true;
             this.messageError = 'The title was not informed';
             return;
         }
 
-        if(this.fileList == null) {
+        if(!this.fileList) {
             this.showMessageError = true;
             this.messageError = 'The file was not selected';
             return;
