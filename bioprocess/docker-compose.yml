@@ -14,7 +14,7 @@ services:
       - lemiseqnet
   bioprocess:
     build: .
-    command: bash -c 'python service.py'
+    command: bash -c 'sleep 20 && python service.py'
     ports:
     - 5001:5001
     volumes:
