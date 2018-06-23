@@ -1,0 +1,1 @@
+    docker-compose -f bioprocess/docker-compose.yml down -v & docker-compose -f auth/docker-compose.yml down -v
