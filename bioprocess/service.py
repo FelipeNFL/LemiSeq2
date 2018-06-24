@@ -3,6 +3,7 @@ import logging
 from flask import Flask
 from flask_restful import Api
 from flask_cors import CORS
+from flask_jwt_simple import JWTManager
 from core import defines
 from core.DbConnection import DbConnection
 from resources.ResourceChrompack import ResourceChrompack
@@ -42,6 +43,11 @@ initialize_directory_data()
 CORS(app)
 
 api = Api(app)
+app.config["JSON_SORT_KEYS"] = False
+app.config['JWT_SECRET_KEY'] = defines.SECRET_KEY
+
+JWTManager(app)
+
 api.add_resource(ResourceChrompack, '/chrompack', methods=['POST'], resource_class_kwargs=params_api)
 api.add_resource(ResourceHealth, '/health', methods=['GET'])
 

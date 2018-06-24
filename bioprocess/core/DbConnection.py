@@ -18,6 +18,16 @@ class DbConnection:
         except ServerSelectionTimeoutError:
             raise ConnectionError("Timeout error")
 
+    def find(self, data: dict, collection: str):
+
+        if not isinstance(data, dict):
+            raise ValueError('filter is not a dict')
+
+        if not isinstance(collection, str):
+            raise ValueError('collection is not a string')
+
+        return self._conn.get_collection(collection).find(data)
+
     def insert(self, data: dict, collection: str):
 
         if not isinstance(data, dict):
@@ -32,6 +42,19 @@ class DbConnection:
             raise Exception('do not possible to insert data')
 
         return result.inserted_id
+
+    def remove(self, data: dict, collection: str):
+
+        if not isinstance(data, dict):
+            raise ValueError('filter is not a dict')
+
+        if not isinstance(collection, str):
+            raise ValueError('collection is not a string')
+
+        result = self._conn.get_collection(collection).delete_many(data)
+
+        if not result.acknowledged:
+            raise Exception('do not possible to delete data')
 
     def update(self, data: dict, filter: dict, collection: str):
 
