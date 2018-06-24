@@ -56,7 +56,7 @@ class DbConnection:
         if not result.acknowledged:
             raise Exception('do not possible to delete data')
 
-    def update(self, data: dict, filter: dict, collection: str):
+    def update(self, data: dict, _filter: dict, collection: str):
 
         if not isinstance(data, dict):
             raise ValueError('data is not a dict')
@@ -64,10 +64,10 @@ class DbConnection:
         if not isinstance(collection, str):
             raise ValueError('collection is not a string')
 
-        if not isinstance(filter, dict):
+        if not isinstance(_filter, dict):
             raise ValueError('filter is not a string')
 
-        result = self._conn.get_collection(collection).update_one(filter=filter, update=data, upsert=True)
+        result = self._conn.get_collection(collection).update_one(filter=_filter, update=data, upsert=True)
 
         if not result.acknowledged:
             raise Exception('do not possible to update data')

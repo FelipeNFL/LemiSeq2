@@ -26,6 +26,8 @@ class ResourceChrompack(Resource):
     @jwt_required
     def post(self):
 
+        id_chrompack = None
+
         try:
             if 'file' not in request.files:
                 return Response('file to upload is not defined', status=400)
@@ -54,6 +56,7 @@ class ResourceChrompack(Resource):
 
             return Response(status=200)
         except FileInvalid:
+            self._chrompack.delete(id_chrompack)
             return Response('the file uploaded is invalid', status=400)
         except Exception as e:
             logging.info(e)

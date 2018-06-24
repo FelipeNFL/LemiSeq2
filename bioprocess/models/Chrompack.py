@@ -35,6 +35,9 @@ class Chrompack:
         command_update = {'$push': {'samples': sample}}
         self._dbconnection.update(command_update, {'_id': id_chrompack}, self._collection)
 
+    def delete(self, id_chrompack):
+        self._dbconnection.remove({'_id': id_chrompack}, self._collection)
+
     @staticmethod
     def get_filename(id_chrompack):
         return '{}.zip'.format(id_chrompack)
@@ -46,16 +49,18 @@ class Chrompack:
 
         for pos, file in enumerate(zf.namelist()):
 
-            try:
-                slot = file[-10:-7]  # .rstrip('.ab1')[-6:-3] #[-3:]  #input filename format
+            file_format = file[-3:]
 
-                if slot[0] not in 'ABCDEFGH':
-                    slot = ""
-
-                if slot[1:3] not in ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12']:
-                    slot = ""
-            except IndexError:
+            if file_format != 'ab1':
                 raise FileInvalid
+
+            slot = file[-10:-7]  # .rstrip('.ab1')[-6:-3] #[-3:]  #input filename format
+
+            if slot[0] not in 'ABCDEFGH':
+                slot = ""
+
+            if slot[1:3] not in ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12']:
+                slot = ""
 
             sample = {'filename': file, 'slot': slot}
 

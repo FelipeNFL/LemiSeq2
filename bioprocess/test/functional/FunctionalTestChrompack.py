@@ -60,13 +60,13 @@ class FunctionalTestChrompack(unittest.TestCase):
         self.assertEqual(res.status_code, 400)
         self.assertEqual(res.text, 'file to upload has not correct format')
 
-    # def test_file_invalid(self):
-    #     headers = self.get_authorization(self.user_test)
-    #     files = {'file': open('test/data/format_wrong.txt', 'rb')}
-    #     res = requests.post(self.url, {}, headers=headers, files=files)
-    #
-    #     self.assertEqual(res.status_code, 400)
-    #     self.assertEqual(res.text, 'file to upload has not correct format')
+    def test_file_invalid(self):
+        headers = self.get_authorization(self.user_test)
+        files = {'file': open('test/data/zip_without_files.zip', 'rb')}
+        res = requests.post(self.url, {'title': 'title'}, headers=headers, files=files)
+
+        self.assertEqual(res.status_code, 400)
+        self.assertEqual(res.text, 'the file uploaded is invalid')
 
     def test_title_empty(self):
         headers = self.get_authorization(self.user_test)
