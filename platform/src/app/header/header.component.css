@@ -44,9 +44,10 @@ hr {
 
 .menu {
     background: -webkit-linear-gradient(top,#839690 0%,#3C6650 100%);
-    height: 30px;
+    height: 45px;
     color: #ffffff;
     padding-top: 10px;
+    padding-bottom: 10px;
 }
 
 .menu > ul {
@@ -59,4 +60,17 @@ hr {
     vertical-align: middle;
     display: inline;
     padding-left: 40px;
+}
+
+.menu a {
+    text-decoration: none;
+}
+
+.menu a:visited {
+    text-decoration: none;
+    color: #ffffff;
+}
+
+.menu a:hover {
+    color:  rgb(33, 90, 54);
 }

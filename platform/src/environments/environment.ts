@@ -5,5 +5,6 @@
 
 export const environment = {
   production: false,
-  auth_url: 'http://localhost:5000'
+  auth_api: 'http://localhost:5000',
+  bioprocess_api: 'http://localhost:5001'
 };

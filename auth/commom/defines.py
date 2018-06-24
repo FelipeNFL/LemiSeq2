@@ -14,7 +14,7 @@ def get_environ(tag):
     return var
 
 
-_SECRET_KEY_ = 'essa key precisa ser trocada'
+_SECRET_KEY_ = get_environ('SECRET_KEY')
 
 _SERVER_URI_ = 'ldap://ldap-proxy.epm.br'
 _SEARCH_BASE_ = 'o=unifesp,c=br'
