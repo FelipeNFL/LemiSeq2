@@ -1,13 +1,9 @@
-import sys
-
-sys.path.append('core')
-
 import unittest
 from datetime import datetime
 import requests
 import jwt
-import defines
-from DbConnection import DbConnection
+from core.DbConnection import DbConnection
+from core import defines
 
 
 class FunctionalTestChrompack(unittest.TestCase):
