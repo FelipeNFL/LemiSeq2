@@ -1,18 +1,14 @@
-import sys
-
-sys.path.append('commom')
-
 import unittest
 import requests
-import defines
+from commom import defines
 
 
 class FunctionalTestService(unittest.TestCase):
 
     @classmethod
-    def setUpClass(self):
+    def setUpClass(cls):
 
-        self.url = 'http://{host}:{port}/{endpoint}'.format(
+        cls.url = 'http://{host}:{port}/{endpoint}'.format(
                                     host=defines._AUTH_HOST_,
                                     port=defines._AUTH_PORT_,
                                     endpoint='health')

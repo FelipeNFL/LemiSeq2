@@ -1,11 +1,7 @@
-import sys
-
-sys.path.append("authenticators")
-sys.path.append("commom")
-
 import unittest
-import defines
-from AuthenticatorUNIFESP import AuthenticatorUNIFESP
+from commom import defines
+from authenticators.AuthenticatorUNIFESP import AuthenticatorUNIFESP
+
 
 class TestAuthenticatorUNIFESP(unittest.TestCase):
 
@@ -31,6 +27,7 @@ class TestAuthenticatorUNIFESP(unittest.TestCase):
             authenticator.validate('123', 123)
 
         authenticator.validate('123', '123')
+
 
 if __name__=='__main__':
     unittest.main()
