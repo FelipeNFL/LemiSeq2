@@ -9,8 +9,8 @@ class FunctionalTestService(unittest.TestCase):
     def setUpClass(cls):
 
         cls.url = 'http://{host}:{port}/{endpoint}'.format(
-                                    host=defines._AUTH_HOST_,
-                                    port=defines._AUTH_PORT_,
+                                    host=defines.AUTH_HOST,
+                                    port=defines.AUTH_PORT,
                                     endpoint='health')
 
     def test_health_service(self):
@@ -21,8 +21,8 @@ class FunctionalTestService(unittest.TestCase):
 
     def test_bad_request(self):
 
-        url = 'http://{host}:{port}'.format(host=defines._AUTH_HOST_,
-                                            port=defines._AUTH_PORT_)
+        url = 'http://{host}:{port}'.format(host=defines.AUTH_HOST,
+                                            port=defines.AUTH_PORT)
 
         res = requests.get(url)
         self.assertEqual(res.status_code, 404)

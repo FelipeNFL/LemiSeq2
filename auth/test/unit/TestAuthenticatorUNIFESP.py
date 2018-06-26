@@ -17,8 +17,8 @@ class TestAuthenticatorUNIFESP(unittest.TestCase):
 
     def test_validate(self):
 
-        authenticator = AuthenticatorUNIFESP(defines._SERVER_URI_,
-                                             defines._SEARCH_BASE_)
+        authenticator = AuthenticatorUNIFESP(defines.SERVER_URI,
+                                             defines.SERACH_BASE)
 
         with self.assertRaises(TypeError):
             authenticator.validate(123, '123')

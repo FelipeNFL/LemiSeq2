@@ -11,8 +11,8 @@ class FunctionalTestEndpointToken(unittest.TestCase):
     def setUpClass(cls):
 
         cls.url = 'http://{host}:{port}/{endpoint}'.format(
-                                    host=defines._AUTH_HOST_,
-                                    port=defines._AUTH_PORT_,
+                                    host=defines.AUTH_HOST,
+                                    port=defines.AUTH_PORT,
                                     endpoint='token')
 
         cls.data = {'username': input('Digite seu usuário UNIFESP: '),
@@ -22,7 +22,7 @@ class FunctionalTestEndpointToken(unittest.TestCase):
 
         res = requests.post(self.url, json=self.data)
         data = jwt.decode(res.json()['token'],
-                          defines._SECRET_KEY_,
+                          defines.SECRET_KEY,
                           algorithms=['HS256'])
 
         self.assertEqual(data['username'], self.data['username'])

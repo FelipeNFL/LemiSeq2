@@ -50,7 +50,7 @@ class RequestToken(Resource):
             return Response(str(e), status=500)
 
         token = jwt.encode({'username': username, 'fullname': fullname},
-                           defines._SECRET_KEY_,
+                           defines.SECRET_KEY,
                            algorithm='HS256')
 
         data = json.dumps({'token': token.decode()})

@@ -2,22 +2,22 @@ import os
 import sys
 
 
-def get_environ(tag):
+def get_environment_variable(tag):
 
     var = os.environ.get(tag)
 
     if var is None:
-        print(tag + " not defined on ENVIRON")
+        print(tag + " not defined on ENVIRONMENT")
         print("finishing...")
         sys.exit()
 
     return var
 
 
-_SECRET_KEY_ = get_environ('SECRET_KEY')
+SECRET_KEY = get_environment_variable('SECRET_KEY')
 
-_SERVER_URI_ = 'ldap://ldap-proxy.epm.br'
-_SEARCH_BASE_ = 'o=unifesp,c=br'
+SERVER_URI = 'ldap://ldap-proxy.epm.br'
+SERACH_BASE = 'o=unifesp,c=br'
 
-_AUTH_HOST_ = get_environ('HOST')
-_AUTH_PORT_ = get_environ('PORT')
+AUTH_HOST = get_environment_variable('HOST')
+AUTH_PORT = get_environment_variable('PORT')
