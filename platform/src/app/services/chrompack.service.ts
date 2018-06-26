@@ -9,7 +9,7 @@ export class ChromPackService {
 
     constructor(private http: HttpClient) { }
 
-    upload(title, fileList){
+    upload(title, fileList): any{
         let file: File = fileList[0];
         let formData: FormData = new FormData();
 
@@ -21,11 +21,8 @@ export class ChromPackService {
         headers.append('Content-Type', 'multipart/form-data');
         headers.append('Accept', 'application/json');
 
-        this.http.post(`${environment.bioprocess_api}/chrompack`, formData, {headers: headers})
-            .subscribe(
-                data => {return true},
-                error => {return error}
-            )
+        return this.http.post(`${environment.bioprocess_api}/chrompack`, formData, {headers: headers})
+
     }
 
 }

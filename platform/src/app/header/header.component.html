@@ -19,7 +19,7 @@
 </div>
 <div class="menu" *ngIf="authService.isLogged()">
     <ul>
-        <li class="welcome">Hello, {{ authService.getFullname() }}!</li>
+        <li class="welcome">Hello, {{ authService.getFullname() | titlecase }}!</li>
         <a><li>SAMPLE</li></a>
         <a><li>SUMMARY</li></a>
         <a><li>SUBJECT</li></a>

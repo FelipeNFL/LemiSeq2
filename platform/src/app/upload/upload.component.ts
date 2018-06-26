@@ -36,6 +36,12 @@ export class UploadComponent {
             return;
         }
 
-        this.chromPackService.upload(this._title, this.fileList);
+        this.chromPackService.upload(this._title, this.fileList).subscribe(
+            data => { this.showMessageSuccess = true },
+            errorObj => { 
+                this.showMessageError = true;
+                this.messageError = errorObj.error;
+            }
+        );
     }
 }
