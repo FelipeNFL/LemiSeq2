@@ -17,12 +17,13 @@
         </div>
     </div>
 </div>
-<div class="menu">
+<div class="menu" *ngIf="authService.isLogged()">
     <ul>
-        <li>SAMPLE</li>
-        <li>SUMMARY</li>
-        <li>SUBJECT</li>
-        <li>CHROMEPACK</li>
+        <li class="welcome">Hello, {{ authService.getFullname() }}!</li>
+        <a><li>SAMPLE</li></a>
+        <a><li>SUMMARY</li></a>
+        <a><li>SUBJECT</li></a>
+        <a><li>CHROMEPACK</li></a>
         <a href='/upload'><li>UPLOAD</li></a>
         <a href='/login' (click)="logout()"><li>LOGOUT</li></a>
     </ul>

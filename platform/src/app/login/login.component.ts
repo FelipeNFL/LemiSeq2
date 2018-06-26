@@ -22,7 +22,7 @@ export class LoginComponent {
 
         this.authService.requestToken(this._usernameModel, this._passwordModel).subscribe(
             (data) => { 
-                this.authService.setSession(data.token, this._usernameModel);
+                this.authService.setSession(data.token, data.fullname);
                 this.router.navigate(['/upload']);
             },
             (errorResponse: HttpErrorResponse) => { 

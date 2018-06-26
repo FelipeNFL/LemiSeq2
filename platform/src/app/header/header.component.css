@@ -81,3 +81,8 @@ hr {
 .menu a:hover {
     color:  rgb(33, 90, 54);
 }
+
+.welcome {
+    font-weight: 300;
+    font-size: 14px;
+}
