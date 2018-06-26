@@ -41,7 +41,7 @@ class DbConnection:
         if not isinstance(collection, str):
             raise TypeError('collection must be a string, not {}'.format(type(collection)))
 
-        return self._conn.get_collection(collection).find(data)
+        return list(self._conn.get_collection(collection).find(data))
 
     def insert(self, data: dict, collection: str):
 
@@ -72,9 +72,9 @@ class DbConnection:
             raise Exception('do not possible to delete data')
 
     def update(self, data: dict, _filter: dict, collection: str):
-
-        if not isinstance(data, dict):
-            raise TypeError('data must be a dict, not {}'.format(type(data)))
+        #
+        # if not isinstance(data, dict):
+        #     raise TypeError('data must be a dict, not {}'.format(type(data)))
 
         if not isinstance(_filter, dict):
             raise TypeError('filter must be a dict, not {}'.format(type(_filter)))
