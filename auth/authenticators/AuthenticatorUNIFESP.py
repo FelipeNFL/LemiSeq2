@@ -63,7 +63,7 @@ class AuthenticatorUNIFESP(Authenticator):
 
             first_entry = entries[0]
 
-            return first_entry['cn']
+            return first_entry['cn'][0]
 
         except Exception as e:
 

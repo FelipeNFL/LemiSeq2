@@ -45,12 +45,11 @@ class RequestToken(Resource):
                             mimetype='application/json')
 
         try:
-            fullname = self._authenticator.get_fullnane(username)
+            fullname = self._authenticator.get_fullname(username)
         except Exception as e:
             return Response(str(e), status=500)
 
-        token = jwt.encode({'username': username},
-                           {'fullname': fullname},
+        token = jwt.encode({'username': username, 'fullname': fullname},
                            defines._SECRET_KEY_,
                            algorithm='HS256')
 

@@ -13,7 +13,7 @@ class FunctionalTestAuthenticator(unittest.TestCase):
                              'password': getpass.getpass(prompt='Digite sua senha UNIFESP: ')}
 
         cls.authenticator = AuthenticatorUNIFESP(defines._SERVER_URI_,
-                                                  defines._SEARCH_BASE_)
+                                                 defines._SEARCH_BASE_)
 
     def test_access_data_invalid(self):
 

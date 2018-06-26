@@ -25,7 +25,8 @@ class FunctionalTestEndpointToken(unittest.TestCase):
                           defines._SECRET_KEY_,
                           algorithms=['HS256'])
 
-        self.assertEqual(data, {'username': self.data['username']})
+        self.assertEqual(data['username'], self.data['username'])
+        self.assertNotEqual(data['fullname'], None)
         self.assertEqual(res.status_code, 200)
 
     def test_login_invalid(self):
