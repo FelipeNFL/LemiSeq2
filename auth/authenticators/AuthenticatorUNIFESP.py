@@ -6,7 +6,8 @@ import hashlib
 import logging
 from ldap3 import Server, Connection
 from ldap3.core.exceptions import LDAPSocketOpenError
-from Authenticator import Authenticator
+from authenticators.Authenticator import Authenticator
+
 
 class AuthenticatorUNIFESP(Authenticator):
 
@@ -44,6 +45,25 @@ class AuthenticatorUNIFESP(Authenticator):
             md5_password = password_list[1].decode()[5:]
 
             return md5_password
+
+        except Exception as e:
+
+            logging.error(e)
+            return None
+
+    def get_fullname(self, username):
+
+        if not isinstance(username, str):
+            raise TypeError('username must be a string, not {type}'.format(
+                type=type(username)))
+
+        entries = self._get_entries(username)
+
+        try:
+
+            first_entry = entries[0]
+
+            return first_entry['cn']
 
         except Exception as e:
 

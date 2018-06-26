@@ -1,6 +1,7 @@
 from flask_restful import Resource
 from flask import Response
 
+
 class ServiceHealth(Resource):
 
     def get(self):
