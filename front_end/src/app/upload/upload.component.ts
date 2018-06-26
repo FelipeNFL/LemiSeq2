@@ -45,7 +45,6 @@ export class UploadComponent {
             },
             errorObj => { 
                 this.loading = false;
-                this.showMessageError = true;
                 this.messageError = errorObj.error;
             }
         );
