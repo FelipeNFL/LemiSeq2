@@ -21,12 +21,13 @@ class FunctionalTestEndpointToken(unittest.TestCase):
     def test_get_token(self):
 
         res = requests.post(self.url, json=self.data)
-        data = jwt.decode(res.json()['token'],
+        res_json = res.json()
+        data = jwt.decode(res_json['token'],
                           defines.SECRET_KEY,
                           algorithms=['HS256'])
 
         self.assertEqual(data['username'], self.data['username'])
-        self.assertNotEqual(data['fullname'], None)
+        self.assertNotEqual(res_json['fullname'], None)
         self.assertEqual(res.status_code, 200)
 
     def test_login_invalid(self):

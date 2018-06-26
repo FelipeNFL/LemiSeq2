@@ -49,10 +49,10 @@ class RequestToken(Resource):
         except Exception as e:
             return Response(str(e), status=500)
 
-        token = jwt.encode({'username': username, 'fullname': fullname},
+        token = jwt.encode({'username': username},
                            defines.SECRET_KEY,
                            algorithm='HS256')
 
-        data = json.dumps({'token': token.decode()})
+        data = json.dumps({'token': token.decode(), 'fullname': fullname})
 
         return Response(data, status=200, mimetype='application/json')
