@@ -1,5 +1,8 @@
 <div class="option-menu">
     <h1>Login</h1>
+    <div *ngIf="loading">
+        <loader class="loader"></loader>
+    </div>
     <div class="alert alert-danger" *ngIf="messageError">
         <strong>Danger!</strong> {{messageError}}
     </div>

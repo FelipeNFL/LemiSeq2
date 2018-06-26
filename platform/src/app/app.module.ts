@@ -14,13 +14,15 @@ import { ChromPackService } from './services/chrompack.service';
 import { AuthGuard } from './authentication/auth.guard';
 import { AppRoutingModule } from './app-routing.module';
 import { AuthInterceptor } from './authentication/auth-interceptor';
+import { LoaderComponent } from './loader/loader.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
     LoginComponent,
-    UploadComponent
+    UploadComponent,
+    LoaderComponent
   ],
   imports: [
     BrowserModule,

@@ -9,12 +9,11 @@ import { ChromPackService } from '../services/chrompack.service';
     ]
 })
 export class UploadComponent {
-    //TODO consertar logo da UNIFESP
     _title: any;
     fileList: FileList;
-    showMessageError: boolean = false;
     showMessageSuccess: boolean = false;
     messageError: string;
+    loading: boolean;
      
     constructor(private chromPackService: ChromPackService) { }
 
@@ -24,24 +23,32 @@ export class UploadComponent {
 
     upload(){
 
+        this.messageError = null;
+        this.showMessageSuccess = false;
+
         if(!this._title) {
-            this.showMessageError = true;
             this.messageError = 'The title was not informed';
             return;
         }
 
         if(!this.fileList) {
-            this.showMessageError = true;
             this.messageError = 'The file was not selected';
             return;
         }
 
+        this.loading = true;
+
         this.chromPackService.upload(this._title, this.fileList).subscribe(
-            data => { this.showMessageSuccess = true },
+            data => {
+                this.showMessageSuccess = true;
+                this.loading = false;        
+            },
             errorObj => { 
+                this.loading = false;
                 this.showMessageError = true;
                 this.messageError = errorObj.error;
             }
         );
+
     }
 }

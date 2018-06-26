@@ -1,0 +1,13 @@
+.loader {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+}
+
+.loading {
+  text-align: center;
+  font-weight: 300;
+  font-size: 18px;
+  color: rgb(33, 90, 54);
+}

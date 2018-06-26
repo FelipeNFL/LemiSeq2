@@ -12,6 +12,7 @@ import { AuthService } from '../services/auth.service';
 export class LoginComponent {
 
     messageError: string = null;
+    loading: boolean = false;
     _usernameModel: string;
     _passwordModel: string;
 
@@ -20,14 +21,19 @@ export class LoginComponent {
     
     login(){
 
+        this.loading = true;
+
         this.authService.requestToken(this._usernameModel, this._passwordModel).subscribe(
             (data) => { 
                 this.authService.setSession(data.token, data.fullname);
+                this.loading = false;
                 this.router.navigate(['/upload']);
             },
-            (errorResponse: HttpErrorResponse) => { 
+            (errorResponse: HttpErrorResponse) => {
+                this.loading = false;                 
                 this.messageError = errorResponse.error;
             }
         );
+
     }
 }
