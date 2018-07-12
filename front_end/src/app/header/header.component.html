@@ -20,10 +20,9 @@
 <div class="menu" *ngIf="authService.isLogged()">
     <ul>
         <li class="welcome">Hello, {{ authService.getFullname() | titlecase }}!</li>
-        <a><li>SAMPLE</li></a>
-        <a><li>SUMMARY</li></a>
+        <a><li>PLATE</li></a>
         <a><li>SUBJECT</li></a>
-        <a><li>CHROMEPACK</li></a>
+        <a><li>SAMPLE</li></a>
         <a href='/upload'><li>UPLOAD</li></a>
         <a href='/login' (click)="logout()"><li>LOGOUT</li></a>
     </ul>
