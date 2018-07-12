@@ -17,13 +17,27 @@
         </div>
     </div>
 </div>
-<div class="menu" *ngIf="authService.isLogged()">
+<nav>
     <ul>
-        <li class="welcome">Hello, {{ authService.getFullname() | titlecase }}!</li>
-        <a><li>PLATE</li></a>
-        <a><li>SUBJECT</li></a>
-        <a><li>SAMPLE</li></a>
-        <a href='/upload'><li>UPLOAD</li></a>
-        <a href='/login' (click)="logout()"><li>LOGOUT</li></a>
+        <li>
+            <a href="#">PLATE</a>
+            <ul>
+                <li><a href="/upload">UPLOAD</a></li>
+                <li><a href="#">SELECT</a></li>
+            </ul>
+        </li>
+        <li>
+            <a href="#">SUBJECT</a>
+            <ul>
+                <li><a href="#">UPLOAD</a></li>
+                <li><a href="#">SELECT</a></li>
+            </ul>
+        </li>
+        <li>
+            <a href="#">SAMPLE</a>
+            <ul>
+                <li><a href="#">ASSIGN SAMPLE TO SLOT</a></li>
+            </ul>
+        </li>
     </ul>
-</div>
+</nav>
