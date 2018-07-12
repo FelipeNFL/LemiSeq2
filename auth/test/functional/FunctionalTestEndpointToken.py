@@ -1,48 +1,46 @@
-import sys
-
-sys.path.append('commom')
-
 import jwt
 import unittest
 import requests
 import getpass
-import defines
+from commom import defines
 
 
 class FunctionalTestEndpointToken(unittest.TestCase):
 
     @classmethod
-    def setUpClass(self):
+    def setUpClass(cls):
 
-        self.url = 'http://{host}:{port}/{endpoint}'.format(
-                                    host=defines._AUTH_HOST_,
-                                    port=defines._AUTH_PORT_,
+        cls.url = 'http://{host}:{port}/{endpoint}'.format(
+                                    host=defines.AUTH_HOST,
+                                    port=defines.AUTH_PORT,
                                     endpoint='token')
 
-        self.data = {'username': input('Digite seu usuário UNIFESP: '),
-                     'password': getpass.getpass(prompt='Digite sua senha UNIFESP: ')}
+        cls.data = {'username': input('Digite seu usuário UNIFESP: '),
+                    'password': getpass.getpass(prompt='Digite sua senha UNIFESP: ')}
 
     def test_get_token(self):
 
         res = requests.post(self.url, json=self.data)
-        data = jwt.decode(res.json()['token'],
-                          defines._SECRET_KEY_,
+        res_json = res.json()
+        data = jwt.decode(res_json['token'],
+                          defines.SECRET_KEY,
                           algorithms=['HS256'])
 
-        self.assertEqual(data, {'username': self.data['username']})
+        self.assertEqual(data['username'], self.data['username'])
+        self.assertNotEqual(res_json['fullname'], None)
         self.assertEqual(res.status_code, 200)
 
     def test_login_invalid(self):
 
         res = requests.post(self.url, json={'username': 'teste',
-                                           'password': 'teste'})
+                                            'password': 'teste'})
 
         self.assertEqual(res.text, 'password or username invalid')
         self.assertEqual(res.status_code, 400)
 
     def test_invalid_json(self):
 
-        res = requests.post(self.url, json={'teste':'teste'})
+        res = requests.post(self.url, json={'teste': 'teste'})
 
         self.assertEqual(res.text, 'the request body is not a valid')
         self.assertEqual(res.status_code, 400)
@@ -52,6 +50,7 @@ class FunctionalTestEndpointToken(unittest.TestCase):
         res = requests.post(self.url)
         self.assertEqual(res.status_code, 400)
         self.assertEqual(res.text, 'the request body cannot null')
+
 
 if __name__ == '__main__':
     unittest.main()

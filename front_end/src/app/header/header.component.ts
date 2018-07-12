@@ -16,7 +16,5 @@ export class HeaderComponent {
 
     logout() {
         this.authService.logout();
-        //TODO redirect to LoginComponent
     }
-
 }

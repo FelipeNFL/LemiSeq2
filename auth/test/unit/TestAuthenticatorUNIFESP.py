@@ -1,11 +1,7 @@
-import sys
-
-sys.path.append("authenticators")
-sys.path.append("commom")
-
 import unittest
-import defines
-from AuthenticatorUNIFESP import AuthenticatorUNIFESP
+from commom import defines
+from authenticators.AuthenticatorUNIFESP import AuthenticatorUNIFESP
+
 
 class TestAuthenticatorUNIFESP(unittest.TestCase):
 
@@ -21,8 +17,8 @@ class TestAuthenticatorUNIFESP(unittest.TestCase):
 
     def test_validate(self):
 
-        authenticator = AuthenticatorUNIFESP(defines._SERVER_URI_,
-                                             defines._SEARCH_BASE_)
+        authenticator = AuthenticatorUNIFESP(defines.SERVER_URI,
+                                             defines.SERACH_BASE)
 
         with self.assertRaises(TypeError):
             authenticator.validate(123, '123')
@@ -31,6 +27,7 @@ class TestAuthenticatorUNIFESP(unittest.TestCase):
             authenticator.validate('123', 123)
 
         authenticator.validate('123', '123')
+
 
 if __name__=='__main__':
     unittest.main()

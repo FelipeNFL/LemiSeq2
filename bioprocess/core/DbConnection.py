@@ -6,6 +6,21 @@ class DbConnection:
 
     def __init__(self, hostname: str, username: str, password: str, database: str, port: int):
 
+        if not isinstance(hostname, str):
+            raise TypeError('hostname must be a string, not {}'.format(type(hostname)))
+
+        if not isinstance(username, str):
+            raise TypeError('username must be a string, not {}'.format(type(username)))
+
+        if not isinstance(password, str):
+            raise TypeError('password must be a string, not {}'.format(type(password)))
+
+        if not isinstance(database, str):
+            raise TypeError('database must be a string, not {}'.format(type(database)))
+
+        if not isinstance(port, int):
+            raise TypeError('port must be a int, not {}'.format(type(hostname)))
+
         try:
             client = MongoClient(hostname, port)
             db = client.get_database(database)
@@ -21,20 +36,20 @@ class DbConnection:
     def find(self, data: dict, collection: str):
 
         if not isinstance(data, dict):
-            raise ValueError('filter is not a dict')
+            raise TypeError('data must be a dict, not {}'.format(type(data)))
 
         if not isinstance(collection, str):
-            raise ValueError('collection is not a string')
+            raise TypeError('collection must be a string, not {}'.format(type(collection)))
 
-        return self._conn.get_collection(collection).find(data)
+        return list(self._conn.get_collection(collection).find(data))
 
     def insert(self, data: dict, collection: str):
 
         if not isinstance(data, dict):
-            raise ValueError('filter is not a dict')
+            raise TypeError('data must be a dict, not {}'.format(type(data)))
 
         if not isinstance(collection, str):
-            raise ValueError('collection is not a string')
+            raise TypeError('collection must be a string, not {}'.format(type(collection)))
 
         result = self._conn.get_collection(collection).insert_one(data)
 
@@ -46,10 +61,10 @@ class DbConnection:
     def remove(self, data: dict, collection: str):
 
         if not isinstance(data, dict):
-            raise ValueError('filter is not a dict')
+            raise TypeError('data must be a dict, not {}'.format(type(data)))
 
         if not isinstance(collection, str):
-            raise ValueError('collection is not a string')
+            raise TypeError('collection must be a string, not {}'.format(type(collection)))
 
         result = self._conn.get_collection(collection).delete_many(data)
 
@@ -57,15 +72,15 @@ class DbConnection:
             raise Exception('do not possible to delete data')
 
     def update(self, data: dict, _filter: dict, collection: str):
-
-        if not isinstance(data, dict):
-            raise ValueError('data is not a dict')
-
-        if not isinstance(collection, str):
-            raise ValueError('collection is not a string')
+        #
+        # if not isinstance(data, dict):
+        #     raise TypeError('data must be a dict, not {}'.format(type(data)))
 
         if not isinstance(_filter, dict):
-            raise ValueError('filter is not a string')
+            raise TypeError('filter must be a dict, not {}'.format(type(_filter)))
+
+        if not isinstance(collection, str):
+            raise TypeError('collection must be a string, not {}'.format(type(collection)))
 
         result = self._conn.get_collection(collection).update_one(filter=_filter, update=data, upsert=True)
 

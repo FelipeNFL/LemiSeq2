@@ -11,14 +11,18 @@ export class AuthService {
         return this.http.post(`${environment.auth_api}/token`, {username: email, password})
     }
 
-    public setSession(token: string, username: string) {
+    public setSession(token: string, fullname: string) {
         localStorage.setItem('token', token);
-        localStorage.setItem('username', username);
+        localStorage.setItem('fullname', fullname);
+    }
+
+    public getFullname() {
+        return localStorage.getItem('fullname');
     }
 
     public logout() {
         localStorage.removeItem('token');
-        localStorage.removeItem('username');
+        localStorage.removeItem('fullname');
     }
 
     public isLogged() {

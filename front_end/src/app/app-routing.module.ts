@@ -5,6 +5,7 @@ import { AuthGuard } from "./authentication/auth.guard";
 import { LoginComponent } from "./login/login.component";
 
 const routes: Routes = [
+    { path: '', redirectTo: 'upload', pathMatch: 'full' },
     { path: 'upload', component: UploadComponent, canActivate: [AuthGuard] },
     { path: 'login', component: LoginComponent }
 ];

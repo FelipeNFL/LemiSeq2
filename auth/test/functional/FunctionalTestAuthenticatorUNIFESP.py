@@ -1,23 +1,19 @@
-import sys
-
-sys.path.append('commom')
-sys.path.append('authenticators')
-
 import unittest
 import getpass
-import defines
-from AuthenticatorUNIFESP import AuthenticatorUNIFESP
+from commom import defines
+from authenticators.AuthenticatorUNIFESP import AuthenticatorUNIFESP
+
 
 class FunctionalTestAuthenticator(unittest.TestCase):
 
     @classmethod
-    def setUpClass(self):
+    def setUpClass(cls):
 
-        self.login_correct = {'username': input('Digite seu usuário UNIFESP: '),
-                              'password': getpass.getpass(prompt='Digite sua senha UNIFESP: ')}
+        cls.login_correct = {'username': input('Digite seu usuário UNIFESP: '),
+                             'password': getpass.getpass(prompt='Digite sua senha UNIFESP: ')}
 
-        self.authenticator = AuthenticatorUNIFESP(defines._SERVER_URI_,
-                                                  defines._SEARCH_BASE_)
+        cls.authenticator = AuthenticatorUNIFESP(defines.SERVER_URI,
+                                                 defines.SERACH_BASE)
 
     def test_access_data_invalid(self):
 
@@ -32,10 +28,16 @@ class FunctionalTestAuthenticator(unittest.TestCase):
                                                self.login_correct['password'])
         self.assertTrue(validate)
 
+    def test_get_fullname(self):
+
+        fullname = self.authenticator.get_fullname(self.login_correct['username'])
+
+        self.assertIsNotNone(fullname)
+
     def test_username_wrong(self):
 
         validate = self.authenticator.validate('wrong',
-                                                self.login_correct['password'])
+                                               self.login_correct['password'])
         self.assertFalse(validate)
 
     def test_password_wrong(self):

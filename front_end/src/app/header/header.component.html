@@ -1,0 +1,30 @@
+<div class="header">
+    <div class="row">
+        <div class="col-md-4 v-centralized-content">
+            <img class="logo-epm" src="../../assets/images/epm_pub.png">
+        </div>
+        <div class="col-md-4">
+            <div class="title">
+                <p class="title-application">LemiSEQ 2</p>
+                <hr>
+                <p>Departamento de Informática em Saúde</p>
+                <p>Escola Paulista de Medicina</p>
+                <p>Universidade Federal de São Paulo</p>
+            </div>
+        </div>
+        <div class="col-md-4 v-centralized-content">
+            <img class="logo-unifesp" src="../../assets/images/unifesp_logo.png">
+        </div>
+    </div>
+</div>
+<div class="menu" *ngIf="authService.isLogged()">
+    <ul>
+        <li class="welcome">Hello, {{ authService.getFullname() | titlecase }}!</li>
+        <a><li>SAMPLE</li></a>
+        <a><li>SUMMARY</li></a>
+        <a><li>SUBJECT</li></a>
+        <a><li>CHROMEPACK</li></a>
+        <a href='/upload'><li>UPLOAD</li></a>
+        <a href='/login' (click)="logout()"><li>LOGOUT</li></a>
+    </ul>
+</div>
