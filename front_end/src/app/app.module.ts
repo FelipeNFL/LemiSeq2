@@ -15,6 +15,7 @@ import { AuthGuard } from './authentication/auth.guard';
 import { AppRoutingModule } from './app-routing.module';
 import { AuthInterceptor } from './authentication/auth-interceptor';
 import { LoaderComponent } from './loader/loader.component';
+import { FooterComponent } from './footer/footer.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { LoaderComponent } from './loader/loader.component';
     HeaderComponent,
     LoginComponent,
     UploadComponent,
-    LoaderComponent
+    LoaderComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,

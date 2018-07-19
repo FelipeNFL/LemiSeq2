@@ -1,0 +1,3 @@
+<div class="footer" *ngIf="authService.isLogged()">
+  <p> Welcome {{ name | titlecase }}! You have {{ plates }} plates, {{ subjects }} subjects and {{ samples }} samples registered</p>
+</div>

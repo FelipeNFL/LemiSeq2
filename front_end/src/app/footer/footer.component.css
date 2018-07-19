@@ -1,0 +1,19 @@
+.footer {
+    position:absolute;
+    bottom:0;
+    width:100%;
+    margin-bottom: 0px;
+    padding-bottom: 0px;
+    background-color: rgb(33, 90, 54);
+    color: white;
+    font-weight: 300;
+    text-align: center;
+    height: 45px;
+    display: table;
+    overflow: hidden;
+}
+
+p {
+    display: table-cell;
+    vertical-align: middle;
+}
