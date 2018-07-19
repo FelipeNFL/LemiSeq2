@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../services/auth.service';
+import { UserService } from '../services/user.service';
 
 @Component({
   selector: 'footer',
@@ -9,19 +10,25 @@ import { AuthService } from '../services/auth.service';
 export class FooterComponent implements OnInit {
 
   name: string;
-  plates: any;
-  samples: any;
-  subjects: any;
+  plates = 0;
+  samples = 0;
+  subjects = 0;
 
-  constructor(private authService: AuthService) { }
+  constructor(private authService: AuthService, private userService: UserService) { }
 
   ngOnInit() {
-
     this.name = this.authService.getFullname();
-    this.plates = 5;
-    this.samples = 5;
-    this.subjects = 5;
 
+    this.refreshMetrics();
   }
 
+  refreshMetrics() {
+    this.userService.getMetrics().subscribe(data => {
+      this.plates = data.chrompacks;
+      this.samples = data.samples;
+      this.subjects = data.subjects;
+    }, err => {
+      console.log(err);
+    });
+  }
 }

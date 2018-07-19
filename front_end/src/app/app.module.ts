@@ -16,6 +16,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AuthInterceptor } from './authentication/auth-interceptor';
 import { LoaderComponent } from './loader/loader.component';
 import { FooterComponent } from './footer/footer.component';
+import { UserService } from './services/user.service';
 
 @NgModule({
   declarations: [
@@ -35,6 +36,7 @@ import { FooterComponent } from './footer/footer.component';
   bootstrap: [AppComponent],
   providers: [
     ChromPackService,
+    UserService,
     AuthService,
     AuthGuard,
     {

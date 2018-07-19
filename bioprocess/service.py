@@ -8,6 +8,7 @@ from core import defines
 from core.DbConnection import DbConnection
 from resources.ResourceChrompack import ResourceChrompack
 from resources.ResourceHealth import ResourceHealth
+from resources.ResourceMetrics import ResourceMetrics
 
 
 logging.basicConfig(level=logging.INFO,
@@ -50,5 +51,6 @@ JWTManager(app)
 
 api.add_resource(ResourceChrompack, '/chrompack', methods=['POST'], resource_class_kwargs=params_api)
 api.add_resource(ResourceHealth, '/health', methods=['GET'])
+api.add_resource(ResourceMetrics, '/metrics', methods=['GET'], resource_class_kwargs=params_api)
 
 app.run(host=defines.BIOPROCESS_HOST, port=defines.BIOPROCESS_PORT, debug=True)
