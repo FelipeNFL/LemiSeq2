@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../services/auth.service';
 import { UserService } from '../services/user.service';
+import { Subscription } from 'rxjs/Subscription';
+import { ChrompackServiceObservable } from '../services/chrompack-observable.service';
 
 @Component({
   selector: 'footer',
@@ -9,14 +11,22 @@ import { UserService } from '../services/user.service';
 })
 export class FooterComponent implements OnInit {
 
+  refreshMetricsSubscription: Subscription;
   name: string;
   plates = 0;
   samples = 0;
   subjects = 0;
 
-  constructor(private authService: AuthService, private userService: UserService) { }
+  constructor(private authService: AuthService,
+              private userService: UserService,
+              private chrompackServiceObservable: ChrompackServiceObservable) { }
 
   ngOnInit() {
+
+    this.refreshMetricsSubscription = this.chrompackServiceObservable.getRefreshResult().subscribe(() => {
+      this.refreshMetrics();
+    });
+
     this.name = this.authService.getFullname();
 
     this.refreshMetrics();
