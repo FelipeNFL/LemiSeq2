@@ -1,0 +1,14 @@
+.option-menu {
+    width: 70%;
+}
+
+.status {
+    text-align: center;
+    margin-top: 15px;
+}
+
+.content {
+    display: flex;
+    margin: 0px;
+    justify-content: center;
+}

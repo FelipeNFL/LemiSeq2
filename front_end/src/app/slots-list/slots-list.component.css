@@ -1,0 +1,48 @@
+table {
+    -webkit-box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.75);
+    -moz-box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.75);
+    box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.75);
+    text-align: center;
+}
+
+tbody {
+    background-color: #ddd;
+    height: 354px;
+    overflow: auto;
+}
+
+thead {
+    background-color: rgb(33, 90, 54);
+}
+
+th {
+    height: 40px;
+    color: #FFFFFF;
+}
+
+tr {
+    cursor: pointer;
+}
+
+td {
+    height: 40px;
+    width: 300px;
+}
+
+tr:nth-child(even) {
+    background-color: rgb(101, 140, 120);    
+}
+
+tr:hover {
+    color: red;
+}
+
+thead > tr, tbody {
+    display:block;
+}
+
+.selected {
+    font-weight: bold;
+    color: #FFFFFF;
+    background-color: rgb(47, 63, 55);    
+}

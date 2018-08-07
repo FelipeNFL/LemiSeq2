@@ -1,0 +1,9 @@
+<div class="option-menu">
+  <div class="content">
+    <slots-view [settings]="slotsSettings"></slots-view>
+    <div>
+      <slots-list [chrompacks]="chrompacks" (viewSlots)="viewSlots($event)"></slots-list>
+      <div *ngIf="!this.idSelected" class="status">No chrompack selected</div>
+    </div>
+  </div>
+</div>

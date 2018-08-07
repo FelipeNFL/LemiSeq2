@@ -17,6 +17,9 @@ import { AuthGuard } from './authentication/auth.guard';
 import { AuthInterceptor } from './authentication/auth-interceptor';
 import { UserService } from './services/user.service';
 import { ChrompackServiceObservable } from './services/chrompack-observable.service';
+import { PlateComponent } from './plate/plate.component';
+import { SlotsViewComponent } from './slots-view/slots-view.component';
+import { SlotsListComponent } from './slots-list/slots-list.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +28,10 @@ import { ChrompackServiceObservable } from './services/chrompack-observable.serv
     LoginComponent,
     UploadComponent,
     LoaderComponent,
-    FooterComponent
+    FooterComponent,
+    PlateComponent,
+    SlotsViewComponent,
+    SlotsListComponent
   ],
   imports: [
     BrowserModule,

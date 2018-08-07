@@ -10,11 +10,6 @@ import { AuthService } from '../services/auth.service';
 })
 
 export class HeaderComponent {
-    title: 'header'
 
-    constructor(private authService: AuthService) { }
-
-    logout() {
-        this.authService.logout();
-    }
+    constructor() { }
 }

@@ -1,0 +1,36 @@
+<div class="content">
+  <table>
+    <thead>
+      <tr>
+        <th></th>
+        <th *ngFor="let line of settings; let indexLine = index">
+          {{ getLetter(indexLine) | uppercase }}
+        </th>
+        <th></th>
+      </tr>
+    </thead>
+    <tr *ngFor="let line of settings; let indexLine = index">
+      <td class="numberColumn">
+        {{ indexLine }}
+      </td>
+      <td *ngFor="let cell of line; let indexColumn = index">
+        <div [ngClass]="cell ? 'slot busy' : 'slot free'">
+          {{ getLetter(indexColumn) | uppercase }}{{ indexLine }}
+        </div>
+      </td>
+      <td class="numberColumn"></td>
+    </tr>
+  </table>
+  <div class="legend">
+    <div class="row">
+      <div class="col-xs-1">
+        <div class="slot free">A0</div>
+      </div>
+      <div class="col-sm-3 description">Free slot</div>
+      <div class="col-xs-1">
+        <div class="busy slot">A0</div>
+      </div>
+      <div class="col-sm-3 description">Busy slot</div>
+    </div>
+  </div>
+</div>

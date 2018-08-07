@@ -1,0 +1,14 @@
+<table>
+  <thead>
+    <th>
+      Plates registered
+    </th>
+  </thead>
+  <tbody>
+    <tr *ngFor="let chrompack of chrompacks">
+      <td (click)="selectChrompack(chrompack.id)" [ngClass]="chrompack.selected ? 'selected' : ''">
+        {{ chrompack.filename }}
+      </td>
+    </tr>
+  </tbody> 
+</table>

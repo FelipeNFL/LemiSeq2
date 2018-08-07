@@ -1,0 +1,63 @@
+.content {
+    margin-right: 32px;
+}
+
+table {
+    -webkit-box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.75);
+    -moz-box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.75);
+    box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.75);
+}
+
+.numberColumn {
+    border: 0px;
+    text-align: center;
+    width: 40px;
+    padding-top: 10px;
+    color: #000;
+}
+
+.slot {
+    margin-right: 3px;
+    margin-left: 3px;
+    margin-top: 3px;
+    margin-bottom: 3px;
+    padding: 5px;
+    border: 1px solid #000000;
+    color: #000000;
+}
+
+.busy {
+    background-color: red;
+}
+
+.free {
+    background-color: green;
+}
+
+thead {
+    background-color: rgb(33, 90, 54);
+    text-align: center;
+}
+
+th {
+    height: 40px;
+    color: #FFFFFF;
+}
+
+.legend {
+    padding-top: 5px;
+    float: none;
+    margin: 0 auto;
+    width: 400px;
+}
+
+.legend .row {
+    justify-content: center;
+    margin: 0;
+}
+
+
+.description {
+    display: flex;
+    align-items: center;
+}
