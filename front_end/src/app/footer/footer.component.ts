@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { AuthService } from '../services/auth.service';
 import { UserService } from '../services/user.service';
 import { Subscription } from 'rxjs/Subscription';
@@ -12,6 +12,8 @@ import { ChrompackServiceObservable } from '../services/chrompack-observable.ser
 export class FooterComponent implements OnInit {
 
   refreshMetricsSubscription: Subscription;
+  refreshLoginSubscription: Subscription;
+  isLogged: boolean;
   name: string;
   plates = 0;
   samples = 0;
@@ -27,8 +29,12 @@ export class FooterComponent implements OnInit {
       this.refreshMetrics();
     });
 
-    this.name = this.authService.getFullname();
+    this.refreshLoginSubscription = this.authService.refreshLogin().subscribe(statusLogin => {
+      this.isLogged = statusLogin;
+    });
 
+    this.name = this.authService.getFullname();
+    this.isLogged = this.authService.isLogged();
     this.refreshMetrics();
   }
 
@@ -40,5 +46,9 @@ export class FooterComponent implements OnInit {
     }, err => {
       console.log(err);
     });
+  }
+
+  logout() {
+    this.authService.logout();
   }
 }

@@ -1,5 +1,6 @@
-import { Component } from '@angular/core'
+import { Component, Input } from '@angular/core'
 import { AuthService } from '../services/auth.service';
+import { Subscription } from 'rxjs/Subscription';
 
 @Component({
     selector: 'header',
@@ -11,5 +12,16 @@ import { AuthService } from '../services/auth.service';
 
 export class HeaderComponent {
 
-    constructor() { }
+    refreshLogout: Subscription;
+    isLogged: boolean;
+
+    constructor(private authService: AuthService) { }
+
+    ngOnInit() {
+        this.isLogged = this.authService.isLogged();
+
+        this.refreshLogout = this.authService.refreshLogin().subscribe(statusLogin => {
+            this.isLogged = statusLogin;
+        });
+    }
 }

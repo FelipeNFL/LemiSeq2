@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 
 import { HttpErrorResponse } from '@angular/common/http';
 import { AuthService } from '../services/auth.service';
+import { ChrompackServiceObservable } from '../services/chrompack-observable.service';
 
 @Component({
     selector: 'login',
@@ -17,7 +18,8 @@ export class LoginComponent {
     _passwordModel: string;
 
     constructor(private authService: AuthService,
-                private router: Router) { }
+                private router: Router,
+                private chrompackServiceObservable: ChrompackServiceObservable) { }
     
     login(){
 
@@ -27,7 +29,8 @@ export class LoginComponent {
             (data) => { 
                 this.authService.setSession(data.token, data.fullname);
                 this.loading = false;
-                this.router.navigate(['/upload']);
+                this.router.navigate(['/plate/upload']);
+                this.chrompackServiceObservable.sendRefreshResult();
             },
             (errorResponse: HttpErrorResponse) => {
                 this.loading = false;                 
