@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { UploadComponent } from '../upload/upload.component';
+import { ChromPackService } from '../services/chrompack.service';
 
 @Component({
   selector: 'app-plate',
@@ -11,7 +14,8 @@ export class PlateComponent implements OnInit {
   chrompacks: any;
   idSelected: String;
 
-  constructor() { }
+  constructor(private modalService: NgbModal,
+              private chrompackService: ChromPackService) { }
 
   ngOnInit() {
 
@@ -83,6 +87,14 @@ export class PlateComponent implements OnInit {
     ];
   }
 
+  getChrompackList() {
+    this.chrompackService.getList().subscribe(result => {
+      this.chrompacks = result;
+    }, err => {
+      //TODO exibir modal de erro
+    });
+  }
+
   fillSettingsDefault() {
     this.slotsSettings = [
       [false, false, false, false, false, false, false, false],
@@ -110,7 +122,23 @@ export class PlateComponent implements OnInit {
 
     this.idSelected = id;
 
-    console.log('get slots chrompack', id);
+    this.chrompackService.getSlots(this.idSelected).subscribe(result => {
+      this.slotsSettings = result;
+    }, err => {
+      //TODO exibir modal de erro
+    });
+  }
+
+  addChrompack(){
+    this.modalService.open(UploadComponent);
+  }
+
+  deleteChrompack() {
+    this.chrompackService.delete(this.idSelected).subscribe(result => {
+      this.getChrompackList();
+    }, err => {
+      //TODO exibir modal de erro
+    });
   }
 
 }

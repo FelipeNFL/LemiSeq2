@@ -20,6 +20,7 @@ import { ChrompackServiceObservable } from './services/chrompack-observable.serv
 import { PlateComponent } from './plate/plate.component';
 import { SlotsViewComponent } from './slots-view/slots-view.component';
 import { SlotsListComponent } from './slots-list/slots-list.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,8 @@ import { SlotsListComponent } from './slots-list/slots-list.component';
     BrowserModule,
     HttpClientModule,
     FormsModule,
-    AppRoutingModule
+    AppRoutingModule,
+    NgbModule.forRoot()
   ],
   bootstrap: [AppComponent],
   providers: [
@@ -51,6 +53,9 @@ import { SlotsListComponent } from './slots-list/slots-list.component';
       useClass: AuthInterceptor,
       multi: true,
     },
+  ],
+  entryComponents: [
+    UploadComponent
   ]
 })
 export class AppModule { }

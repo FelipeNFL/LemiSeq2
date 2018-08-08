@@ -1,3 +1,12 @@
 .option-menu {
-    width: 40%;
+    width: 100%;
+    margin: 0;
 }
+
+.close-icon {
+    font-size: 25px;
+    padding-right: 10px;
+    vertical-align: top;
+}
+
+/*TODO renomear esse option menu para um nome mais genérico*/

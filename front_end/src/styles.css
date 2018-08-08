@@ -53,3 +53,8 @@ body {
 .option-menu button:hover{
     background: rgb(18, 49, 29);
 }
+
+.option-menu .icon {
+    color: rgb(33, 90, 54);
+    cursor: pointer;
+}

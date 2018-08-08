@@ -1,6 +1,8 @@
 import { Component } from '@angular/core'
 import { ChromPackService } from '../services/chrompack.service';
 import { ChrompackServiceObservable } from '../services/chrompack-observable.service';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+
 
 @Component({
     selector: 'upload',
@@ -17,10 +19,15 @@ export class UploadComponent {
     loading: boolean;
      
     constructor(private chromPackService: ChromPackService,
-                private chrompackServiceObservable: ChrompackServiceObservable) { }
+                private chrompackServiceObservable: ChrompackServiceObservable,
+                public activeModal: NgbActiveModal) { }
 
     fileChange(event) {
         this.fileList = event.target.files;
+    }
+
+    close() {
+        this.activeModal.close();
     }
 
     upload(){
@@ -41,7 +48,7 @@ export class UploadComponent {
         this.loading = true;
 
         this.chromPackService.upload(this._title, this.fileList).subscribe(
-            data => {
+            () => {
                 this.showMessageSuccess = true;
                 this.loading = false;
                 this.chrompackServiceObservable.sendRefreshResult();

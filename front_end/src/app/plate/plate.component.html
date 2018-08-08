@@ -3,7 +3,14 @@
     <slots-view [settings]="slotsSettings"></slots-view>
     <div>
       <slots-list [chrompacks]="chrompacks" (viewSlots)="viewSlots($event)"></slots-list>
-      <div *ngIf="!this.idSelected" class="status">No chrompack selected</div>
+      <div class="manager-plates-bar">
+        <i class="material-icons icon icon-remove" (click)="deleteChrompack()" *ngIf="idSelected">
+          delete_forever
+        </i>
+        <i class="material-icons icon icon-add" (click)="addChrompack()">
+          note_add
+        </i>
+      </div>
     </div>
   </div>
 </div>

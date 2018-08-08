@@ -8,7 +8,7 @@ export class ChromPackService {
 
     constructor(private http: HttpClient) { }
 
-    upload(title, fileList): any{
+    public upload(title, fileList): any{
         let file: File = fileList[0];
         let formData: FormData = new FormData();
 
@@ -21,7 +21,18 @@ export class ChromPackService {
         headers.append('Accept', 'application/json');
 
         return this.http.post(`${environment.bioprocess_api}/chrompack`, formData, {headers: headers})
+    }
 
+    public getList(): any{
+        return this.http.get(`${environment.bioprocess_api}/chrompack`);
+    }
+
+    public getSlots(id: String): any {
+        return this.http.get(`${environment.bioprocess_api}/metrics/${id}`);
+    }
+
+    public delete(id: String): any {
+        return this.http.delete(`${environment.bioprocess_api}/metrics/${id}`);
     }
 
 }
