@@ -6,6 +6,7 @@ table {
 }
 
 tbody {
+    min-width: 300px;
     background-color: #ddd;
     height: 354px;
     overflow: auto;

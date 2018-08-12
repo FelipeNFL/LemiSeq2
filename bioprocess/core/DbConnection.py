@@ -33,7 +33,7 @@ class DbConnection:
         except ServerSelectionTimeoutError:
             raise ConnectionError("Timeout error")
 
-    def find(self, data: dict, collection: str):
+    def find(self, data: dict, collection: str, fields=None):
 
         if not isinstance(data, dict):
             raise TypeError('data must be a dict, not {}'.format(type(data)))
@@ -41,7 +41,7 @@ class DbConnection:
         if not isinstance(collection, str):
             raise TypeError('collection must be a string, not {}'.format(type(collection)))
 
-        return list(self._conn.get_collection(collection).find(data))
+        return list(self._conn.get_collection(collection).find(data, fields))
 
     def insert(self, data: dict, collection: str):
 
@@ -68,8 +68,7 @@ class DbConnection:
 
         result = self._conn.get_collection(collection).delete_many(data)
 
-        if not result.acknowledged:
-            raise Exception('do not possible to delete data')
+        return result.deleted_count
 
     def update(self, data: dict, _filter: dict, collection: str):
 

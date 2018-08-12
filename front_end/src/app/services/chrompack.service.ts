@@ -24,15 +24,15 @@ export class ChromPackService {
     }
 
     public getList(): any{
-        return this.http.get(`${environment.bioprocess_api}/chrompack`);
+        return this.http.get(`${environment.bioprocess_api}/chrompack/all`);
     }
 
     public getSlots(id: String): any {
-        return this.http.get(`${environment.bioprocess_api}/metrics/${id}`);
+        return this.http.get(`${environment.bioprocess_api}/chrompack/${id}`);
     }
 
     public delete(id: String): any {
-        return this.http.delete(`${environment.bioprocess_api}/metrics/${id}`);
+        return this.http.delete(`${environment.bioprocess_api}/chrompack/${id}`);
     }
 
 }

@@ -6,8 +6,8 @@
   </thead>
   <tbody>
     <tr *ngFor="let chrompack of chrompacks">
-      <td (click)="selectChrompack(chrompack.id)" [ngClass]="chrompack.selected ? 'selected' : ''">
-        {{ chrompack.filename }}
+      <td (click)="selectChrompack(chrompack._id)" [ngClass]="chrompack.selected ? 'selected' : ''">
+        {{ chrompack.title }}
       </td>
     </tr>
   </tbody> 

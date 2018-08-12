@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { UploadComponent } from '../upload/upload.component';
 import { ChromPackService } from '../services/chrompack.service';
+import { ChrompackServiceObservable } from '../services/chrompack-observable.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-plate',
@@ -10,81 +12,26 @@ import { ChromPackService } from '../services/chrompack.service';
 })
 export class PlateComponent implements OnInit {
 
+  refreshMetricsSubscription: Subscription
   slotsSettings: any;
   chrompacks: any;
   idSelected: String;
 
   constructor(private modalService: NgbModal,
-              private chrompackService: ChromPackService) { }
+              private chrompackService: ChromPackService,
+              private chrompackServiceObservable: ChrompackServiceObservable) { }
 
   ngOnInit() {
+
+    this.refreshMetricsSubscription = this.chrompackServiceObservable.getRefreshResult().subscribe(() => {
+      this.getChrompackList();
+    });
 
     if(!this.idSelected){
       this.fillSettingsDefault();
     }
 
-    this.chrompacks = [
-      {
-        filename: "teste_one_samples.zip",
-        id: "5acbc564bdsa7c5"
-      },
-      {
-        filename: "teste_one_samples.zip",
-        id: "5acbc564bdsa7c6"
-      },
-      {
-        filename: "teste_one_samples.zip",
-        id: "5acbc564bdsa7c7"
-      },
-      {
-        filename: "teste_one_samples.zip",
-        id: "5acbc564bdsa7c8"
-      },
-      {
-        filename: "teste_one_samples.zip",
-        id: "5acbc564bdsa7c9"
-      },
-      {
-        filename: "teste_one_samples.zip",
-        id: "5acbc564bdsa710"
-      },
-      {
-        filename: "teste_one_samples.zip",
-        id: "5acbc564bdsa711"
-      },
-      {
-        filename: "teste_one_samples.zip",
-        id: "5acbc564bdsa712"
-      },
-      {
-        filename: "teste_one_samples.zip",
-        id: "5acbc564bdsa713"
-      },
-      {
-        filename: "teste_one_samples.zip",
-        id: "5acbc564bdsa714"
-      },
-      {
-        filename: "teste_one_samples.zip",
-        id: "5acbc564bdsa715"
-      },
-      {
-        filename: "teste_one_samples.zip",
-        id: "5acbc564bdsa716"
-      },
-      {
-        filename: "teste_one_samples.zip",
-        id: "5acbc564bdsa717"
-      },
-      {
-        filename: "teste_one_samples.zip",
-        id: "5acbc564bdsa718"
-      },
-      {
-        filename: "teste_one_samples.zip",
-        id: "5acbc564bdsa719"
-      }
-    ];
+    this.getChrompackList();
   }
 
   getChrompackList() {
@@ -111,11 +58,11 @@ export class PlateComponent implements OnInit {
   viewSlots(id){
     this.chrompacks.forEach(chrompack => {
 
-      if(chrompack.id === this.idSelected) {
+      if(chrompack._id === this.idSelected) {
         chrompack.selected = false;
       }
       
-      if(chrompack.id === id) {
+      if(chrompack._id === id) {
         chrompack.selected = true;
       }
     });
@@ -134,8 +81,9 @@ export class PlateComponent implements OnInit {
   }
 
   deleteChrompack() {
-    this.chrompackService.delete(this.idSelected).subscribe(result => {
+    this.chrompackService.delete(this.idSelected).subscribe(() => {
       this.getChrompackList();
+      this.chrompackServiceObservable.sendRefreshResult();
     }, err => {
       //TODO exibir modal de erro
     });

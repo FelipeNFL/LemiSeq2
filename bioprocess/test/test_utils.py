@@ -1,3 +1,4 @@
+import jwt
 from core import defines
 from core.DbConnection import DbConnection
 
@@ -9,3 +10,9 @@ def get_database_production():
                         defines.MONGO_PASS,
                         defines.MONGO_DB,
                         defines.MONGO_PORT)
+
+
+def get_authorization(username):
+    secret_key = defines.SECRET_KEY
+    token = jwt.encode({'username': username}, secret_key).decode()
+    return {'Authorization': 'Bearer {}'.format(token)}

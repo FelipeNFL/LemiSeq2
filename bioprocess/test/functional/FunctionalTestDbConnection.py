@@ -32,16 +32,32 @@ class FunctionalTestDbConnection(unittest.TestCase):
         self.assertEqual(len(result), 1)
         self.assertEqual(result[0], data)
 
+    def test_insert_and_find_filtering_fields(self):
+        db_connection = self.get_instance()
+        data = {'test': 'test_and_find', 'test2': 'test_2'}
+
+        db_connection.insert(data, self.collection)
+        result = db_connection.find(data, self.collection, {'_id': 1, 'test': 1})
+
+        self.assertEqual(len(result), 1)
+        self.assertEqual(len(result[0].keys()),2)
+
+        expected_fields = ['_id', 'test']
+
+        for field in result[0].keys():
+            self.assertIn(field, expected_fields)
+
     def test_delete(self):
         db_connection = self.get_instance()
         data = {'test': 'test_and_find'}
 
         db_connection.insert(data, self.collection)
-        db_connection.remove(data, self.collection)
+        deleted_count = db_connection.remove(data, self.collection)
 
         result = db_connection.find(data, self.collection)
 
         self.assertEqual(len(result), 0)
+        self.assertEqual(deleted_count, 1)
 
     def test_update(self):
         db_connection = self.get_instance()

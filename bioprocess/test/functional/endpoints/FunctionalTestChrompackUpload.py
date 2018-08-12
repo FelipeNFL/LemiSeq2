@@ -2,7 +2,7 @@ import unittest
 from datetime import datetime
 import requests
 import jwt
-from core.DbConnection import DbConnection
+from test import test_utils
 from core import defines
 
 
@@ -11,22 +11,13 @@ class FunctionalTestChrompack(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.url = "http://{host}:{port}/chrompack".format(host=defines.BIOPROCESS_HOST, port=defines.BIOPROCESS_PORT)
-        cls.db_connection = DbConnection(defines.MONGO_HOST,
-                                         defines.MONGO_USER,
-                                         defines.MONGO_PASS,
-                                         defines.MONGO_DB,
-                                         defines.MONGO_PORT)
+        cls.db_connection = test_utils.get_database_production()
         cls.collection = 'chrompack'
-        cls.user_test = 'test_chrompack_one_sample'
+        cls.user_test = 'test_chrompack_upload'
 
     @classmethod
     def tearDownClass(cls):
         cls.db_connection.remove({'user': cls.user_test}, cls.collection)
-
-    def get_authorization(self, username='test'):
-        secret_key = defines.SECRET_KEY
-        token = jwt.encode({'username': username}, secret_key).decode()
-        return {'Authorization': 'Bearer {}'.format(token)}
 
     def test_request_without_authorization(self):
         res = requests.post(self.url, {})
@@ -42,41 +33,50 @@ class FunctionalTestChrompack(unittest.TestCase):
         self.assertEqual(res.status_code, 422)
 
     def test_file_empty(self):
-        headers = self.get_authorization(self.user_test)
+        headers = test_utils.get_authorization(self.user_test)
         res = requests.post(self.url, {}, headers=headers)
 
         self.assertEqual(res.status_code, 400)
         self.assertEqual(res.text, 'file to upload is not defined')
 
     def test_file_format_wrong(self):
-        headers = self.get_authorization(self.user_test)
-        files = {'file': open('test/data/format_wrong.txt', 'rb')}
-        res = requests.post(self.url, {}, headers=headers, files=files)
+
+        with open('test/data/format_wrong.txt', 'rb') as fp:
+            headers = test_utils.get_authorization(self.user_test)
+            files = {'file': fp}
+            res = requests.post(self.url, {}, headers=headers, files=files)
 
         self.assertEqual(res.status_code, 400)
         self.assertEqual(res.text, 'file to upload has not correct format')
 
     def test_file_invalid(self):
-        headers = self.get_authorization(self.user_test)
-        files = {'file': open('test/data/zip_without_files.zip', 'rb')}
-        res = requests.post(self.url, {'title': 'title'}, headers=headers, files=files)
+
+        with open('test/data/zip_without_files.zip', 'rb') as fp:
+            headers = test_utils.get_authorization(self.user_test)
+            files = {'file': fp}
+            res = requests.post(self.url, {'title': 'test_file_invalid'}, headers=headers, files=files)
 
         self.assertEqual(res.status_code, 400)
         self.assertEqual(res.text, 'the file uploaded is invalid')
 
     def test_title_empty(self):
-        headers = self.get_authorization(self.user_test)
-        files = {'file': open('test/data/test_many_samples.zip', 'rb')}
-        res = requests.post(self.url, {}, headers=headers, files=files)
+
+        with open('test/data/test_many_samples.zip', 'rb') as fp:
+            headers = test_utils.get_authorization(self.user_test)
+            files = {'file': fp}
+            res = requests.post(self.url, {}, headers=headers, files=files)
 
         self.assertEqual(res.status_code, 400)
         self.assertEqual(res.text, 'title to upload do not be empty')
 
     def test_upload_chrompack(self):
-        files = {'file': open('test/data/test_many_samples.zip', 'rb')}
-        headers = self.get_authorization(self.user_test)
-        title_test = 'test'
-        res = requests.post(self.url, {'title': title_test}, files=files, headers=headers)
+
+        with open('test/data/test_many_samples.zip', 'rb') as fp:
+
+            files = {'file': fp}
+            headers = test_utils.get_authorization(self.user_test)
+            title_test = 'test_upload_chrompack'
+            res = requests.post(self.url, {'title': title_test}, files=files, headers=headers)
 
         self.assertEqual(res.status_code, 200)
 

@@ -9,6 +9,8 @@ from core.DbConnection import DbConnection
 from resources.ResourceChrompack import ResourceChrompack
 from resources.ResourceHealth import ResourceHealth
 from resources.ResourceMetrics import ResourceMetrics
+from resources.ResourceChrompackList import ResourceChrompackList
+from resources.ResourceChrompackUpload import ResourceChrompackUpload
 
 
 logging.basicConfig(level=logging.INFO,
@@ -49,7 +51,9 @@ app.config['JWT_SECRET_KEY'] = defines.SECRET_KEY
 
 JWTManager(app)
 
-api.add_resource(ResourceChrompack, '/chrompack', methods=['POST'], resource_class_kwargs=params_api)
+api.add_resource(ResourceChrompackUpload, '/chrompack', methods=['POST'], resource_class_kwargs=params_api)
+api.add_resource(ResourceChrompack, '/chrompack/<string:id>', methods=['DELETE'], resource_class_kwargs=params_api)
+api.add_resource(ResourceChrompackList, '/chrompack/all', methods=['GET'], resource_class_kwargs=params_api)
 api.add_resource(ResourceHealth, '/health', methods=['GET'])
 api.add_resource(ResourceMetrics, '/metrics', methods=['GET'], resource_class_kwargs=params_api)
 

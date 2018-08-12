@@ -1,4 +1,5 @@
 import os
+from bson.objectid import ObjectId
 from zipfile import ZipFile
 from datetime import datetime
 
@@ -35,14 +36,19 @@ class Chrompack:
         command_update = {'$push': {'samples': sample}}
         self._dbconnection.update(command_update, {'_id': id_chrompack}, self._collection)
 
-    def delete(self, id_chrompack):
-        self._dbconnection.remove({'_id': id_chrompack}, self._collection)
+    def delete(self, id):
+        return self._dbconnection.remove({'_id': ObjectId(id)}, self._collection)
 
     @staticmethod
     def get_filename(id_chrompack):
         return '{}.zip'.format(id_chrompack)
 
+    def get_list(self, username):
+        return self._dbconnection.find({'user': username}, self._collection, {'_id': 1, 'title': 1})
+
     def extract_samples(self, filename_zip, id_chrompack, upload_dir):
+
+        #TODO talvez isso mereça ser encapsulado em outra classe
 
         sample_list = []
         zf = ZipFile(filename_zip)
