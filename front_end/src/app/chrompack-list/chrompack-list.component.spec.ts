@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SlotsListComponent } from './slots-list.component';
+import { ChrompackListComponent } from './chrompack-list.component';
 
 describe('SlotsListComponent', () => {
-  let component: SlotsListComponent;
-  let fixture: ComponentFixture<SlotsListComponent>;
+  let component: ChrompackListComponent;
+  let fixture: ComponentFixture<ChrompackListComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SlotsListComponent ]
+      declarations: [ ChrompackListComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(SlotsListComponent);
+    fixture = TestBed.createComponent(ChrompackListComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

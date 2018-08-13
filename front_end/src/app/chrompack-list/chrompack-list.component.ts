@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { UploadComponent } from '../upload/upload.component';
 import { ChromPackService } from '../services/chrompack.service';
@@ -6,11 +6,11 @@ import { ChrompackServiceObservable } from '../services/chrompack-observable.ser
 import { Subscription } from 'rxjs';
 
 @Component({
-  selector: 'slots-list',
-  templateUrl: './slots-list.component.html',
-  styleUrls: ['./slots-list.component.css']
+  selector: 'chrompack-list',
+  templateUrl: './chrompack-list.component.html',
+  styleUrls: ['./chrompack-list.component.css']
 })
-export class SlotsListComponent implements OnInit {
+export class ChrompackListComponent implements OnInit {
 
   @Output() viewSlots = new EventEmitter();
   chrompacks: Array<any>;

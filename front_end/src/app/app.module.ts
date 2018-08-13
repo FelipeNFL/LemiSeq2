@@ -19,7 +19,7 @@ import { UserService } from './services/user.service';
 import { ChrompackServiceObservable } from './services/chrompack-observable.service';
 import { PlateComponent } from './plate/plate.component';
 import { SlotsViewComponent } from './slots-view/slots-view.component';
-import { SlotsListComponent } from './slots-list/slots-list.component';
+import { ChrompackListComponent } from './chrompack-list/chrompack-list.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
@@ -32,7 +32,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     FooterComponent,
     PlateComponent,
     SlotsViewComponent,
-    SlotsListComponent
+    ChrompackListComponent
   ],
   imports: [
     BrowserModule,
