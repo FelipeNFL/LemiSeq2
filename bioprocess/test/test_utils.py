@@ -1,4 +1,5 @@
 import jwt
+import json
 from core import defines
 from core.DbConnection import DbConnection
 
@@ -16,3 +17,9 @@ def get_authorization(username):
     secret_key = defines.SECRET_KEY
     token = jwt.encode({'username': username}, secret_key).decode()
     return {'Authorization': 'Bearer {}'.format(token)}
+
+
+def get_json_from_file(filename):
+    with open(filename, 'rb') as fp:
+        data = fp.read()
+        return json.loads(data)

@@ -6,9 +6,24 @@
   </thead>
   <tbody>
     <tr *ngFor="let chrompack of chrompacks">
-      <td (click)="selectChrompack(chrompack._id)" [ngClass]="chrompack.selected ? 'selected' : ''">
+      <td (click)="select(chrompack._id)" [ngClass]="chrompack.selected ? 'selected' : ''">
         {{ chrompack.title }}
       </td>
     </tr>
   </tbody> 
 </table>
+<div>
+  <div class="manager-plates-bar">
+    <i class="material-icons icon icon-add" (click)="add()" title="Upload new plate">
+      note_add
+    </i>
+    <div *ngIf="selectedId">
+      <i class="material-icons icon icon-remove" (click)="delete()" title="Delete plate selected">
+        delete_forever
+      </i>
+      <i class="material-icons icon icon-edit" title="Manage plate's subjects">
+        edit
+      </i>
+    </div>
+  </div>
+</div>

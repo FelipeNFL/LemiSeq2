@@ -34,6 +34,10 @@ table {
     background-color: green;
 }
 
+.not-found {
+    background-color: gray;
+}
+
 thead {
     background-color: rgb(33, 90, 54);
     text-align: center;
@@ -52,7 +56,7 @@ th {
 }
 
 .legend .row {
-    justify-content: center;
+    justify-content: left;
     margin: 0;
 }
 
@@ -60,4 +64,5 @@ th {
 .description {
     display: flex;
     align-items: center;
+    box-sizing: unset;
 }

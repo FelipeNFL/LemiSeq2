@@ -47,3 +47,26 @@ thead > tr, tbody {
     color: #FFFFFF;
     background-color: rgb(47, 63, 55);    
 }
+
+.icon {
+    margin-left: 25px;
+    padding-top: 10px;
+}
+
+.icon-add {
+    padding-top: 13px;
+    font-size: 35px;
+}
+
+.icon-remove {
+    font-size: 40px;
+}
+
+.icon-edit {
+    font-size: 35px;
+}
+
+.manager-plates-bar {
+    display: flex;
+    justify-content: center;
+}
