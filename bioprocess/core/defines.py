@@ -30,3 +30,4 @@ DATA_PATH = 'data'
 
 DATA_CHROMPACK = DATA_PATH + '/chrompack'
 DATA_SAMPLE = DATA_PATH + '/samplepool'
+CONFIG_PATH = 'config.json'

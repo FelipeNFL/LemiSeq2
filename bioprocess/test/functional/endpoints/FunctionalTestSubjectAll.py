@@ -16,15 +16,20 @@ class FunctionalTestChrompack(unittest.TestCase):
         cls.db_connection = test_utils.get_database_production()
 
         cls.collection = 'chrompack'
-        cls.user_test = 'test_list_all'
+        cls.user_test = 'test_subject_all'
 
     @classmethod
     def tearDownClass(cls):
         cls.db_connection.remove({'user': cls.user_test}, cls.collection)
 
+    def get_letter_list(self, last_letter):
+        code_max_letter = ord(last_letter)
+        code_letter_a = ord('A')
+        return [chr(letter_code) for letter_code in range(code_letter_a, code_max_letter + 1)]
+
     def test_request_without_authorization(self):
-        url = '{url}/{id}'.format(url=self.url, id='5b7091ba8dff0c000ec3eca4')
-        res = requests.delete(url)
+        url = '{url}/{id}/subject/all'.format(url=self.url, id='5b7091ba8dff0c000ec3eca4')
+        res = requests.get(url)
         self.assertEqual(res.status_code, 401)
 
     def test_wrong_token(self):
@@ -32,43 +37,43 @@ class FunctionalTestChrompack(unittest.TestCase):
         token = jwt.encode({'user': 'test'}, secret_key).decode()
         headers = {'Authorization': 'Bearer {}'.format(token)}
 
-        url = '{url}/{id}'.format(url=self.url, id='5b7091ba8dff0c000ec3eca4')
-        res = requests.delete(url=url, json={}, headers=headers)
+        url = '{url}/{id}/subject/all'.format(url=self.url, id='5b7091ba8dff0c000ec3eca4')
+        res = requests.get(url=url, headers=headers)
 
         self.assertEqual(res.status_code, 422)
 
-    def test_delete_id_not_existing(self):
-
-        url = '{url}/{id}'.format(url=self.url, id='5b7091ba8dff0c000ec3eca4')
-        res = requests.delete(url=url, headers=test_utils.get_authorization(self.user_test))
-
-        self.assertEqual(res.status_code, 400)
-        self.assertEqual(res.text, 'No record deleted')
-
-    def test_delete_successful(self):
-
+    def test_get_matrix_sucessful(self):
         headers = test_utils.get_authorization(self.user_test)
 
         with open(test_utils.DATA_TEST_PATH + 'test_many_samples.zip', 'rb') as fp:
             files = {'file': fp}
-            title_test = 'test_delete_successful'
+            title_test = 'test_subject_all_successful'
             res = requests.post(self.url, {'title': title_test}, files=files, headers=headers)
 
         self.assertEqual(res.status_code, 200)
 
         url_get_list = '{url}/{endpoint}'.format(url=self.url, endpoint='all')
         res = requests.get(url_get_list, headers=headers)
+        res_json = res.json()
+
+        self.assertEqual(len(res_json), 1)
 
         id_chrompack = res.json()[0]['_id']
 
-        url_delete = '{url}/{id}'.format(url=self.url, id=id_chrompack)
-        res = requests.delete(url_delete, headers=headers)
+        url_subject_all = '{url}/{id}/subject/all'.format(url=self.url, id=id_chrompack)
+
+        res = requests.get(url_subject_all, headers=headers)
 
         self.assertEqual(res.status_code, 200)
 
-        res = requests.get(url_get_list, headers=headers)
+        matrix = res.json()
+        slots_config = test_utils.get_configs_production()['slots']
+        letters_slot = self.get_letter_list(slots_config['max_letter'])
 
-        self.assertEqual(res.json(), [])
+        self.assertEqual(len(matrix), len(letters_slot))
+
+        for line in matrix:
+            self.assertEqual(len(line), slots_config['max_position'])
 
 
 if "__main__" == __name__:

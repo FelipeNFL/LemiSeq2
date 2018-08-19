@@ -46,5 +46,3 @@ class FunctionalTestUser(unittest.TestCase):
         model_user = User(self.db, self.user_test)
 
         self.assertEqual(model_user.get_num_samples(), num_samples_each_chrompack * 2)
-
-    #TODO fazer testes de contagem de subjects

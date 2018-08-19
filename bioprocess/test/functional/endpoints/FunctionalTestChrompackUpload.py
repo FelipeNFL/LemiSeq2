@@ -41,7 +41,7 @@ class FunctionalTestChrompack(unittest.TestCase):
 
     def test_file_format_wrong(self):
 
-        with open('test/data/format_wrong.txt', 'rb') as fp:
+        with open(test_utils.DATA_TEST_PATH + 'format_wrong.txt', 'rb') as fp:
             headers = test_utils.get_authorization(self.user_test)
             files = {'file': fp}
             res = requests.post(self.url, {}, headers=headers, files=files)
@@ -51,7 +51,7 @@ class FunctionalTestChrompack(unittest.TestCase):
 
     def test_file_invalid(self):
 
-        with open('test/data/zip_without_files.zip', 'rb') as fp:
+        with open(test_utils.DATA_TEST_PATH + 'zip_without_files.zip', 'rb') as fp:
             headers = test_utils.get_authorization(self.user_test)
             files = {'file': fp}
             res = requests.post(self.url, {'title': 'test_file_invalid'}, headers=headers, files=files)
@@ -61,7 +61,7 @@ class FunctionalTestChrompack(unittest.TestCase):
 
     def test_title_empty(self):
 
-        with open('test/data/test_many_samples.zip', 'rb') as fp:
+        with open(test_utils.DATA_TEST_PATH + 'test_many_samples.zip', 'rb') as fp:
             headers = test_utils.get_authorization(self.user_test)
             files = {'file': fp}
             res = requests.post(self.url, {}, headers=headers, files=files)
@@ -71,8 +71,7 @@ class FunctionalTestChrompack(unittest.TestCase):
 
     def test_upload_chrompack(self):
 
-        with open('test/data/test_many_samples.zip', 'rb') as fp:
-
+        with open(test_utils.DATA_TEST_PATH + 'test_many_samples.zip', 'rb') as fp:
             files = {'file': fp}
             headers = test_utils.get_authorization(self.user_test)
             title_test = 'test_upload_chrompack'

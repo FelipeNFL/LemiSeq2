@@ -8,6 +8,7 @@ class FileInvalid(Exception):
     pass
 
 
+#TODO precisa testar essa classe
 class Chrompack:
 
     def __init__(self, dbconnection):
@@ -46,6 +47,16 @@ class Chrompack:
     def get_list(self, username):
         return self._dbconnection.find({'user': username}, self._collection, {'_id': 1, 'title': 1})
 
+    #TODO testar quando id não existir
+    def get_samples_by_id(self, id):
+
+        data = self._dbconnection.find({'_id': ObjectId(id)}, self._collection, {'samples': 1})[0]
+
+        if 'samples' in data:
+            return data['samples']
+
+        return None
+
     def extract_samples(self, filename_zip, id_chrompack, upload_dir):
 
         #TODO talvez isso mereça ser encapsulado em outra classe
@@ -68,7 +79,7 @@ class Chrompack:
             if slot[1:3] not in ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12']:
                 slot = ""
 
-            sample = {'filename': file, 'slot': slot}
+            sample = {'filename': file, 'slot': slot, 'subject': ''}
 
             self._add_sample(sample, id_chrompack)
 

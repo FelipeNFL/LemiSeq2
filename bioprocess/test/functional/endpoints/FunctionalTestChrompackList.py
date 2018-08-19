@@ -38,10 +38,10 @@ class FunctionalTestChrompackUpload(unittest.TestCase):
 
     def test_get_list(self):
 
-        with open('test/data/test_many_samples.zip', 'rb') as file_test:
+        with open(test_utils.DATA_TEST_PATH + 'test_many_samples.zip', 'rb') as fp:
             headers = test_utils.get_authorization(self.user_test)
             title_test = 'test_list'
-            files = {'file': file_test}
+            files = {'file': fp}
 
             requests.post(self.url_upload, {'title': title_test}, files=files, headers=headers)
 
