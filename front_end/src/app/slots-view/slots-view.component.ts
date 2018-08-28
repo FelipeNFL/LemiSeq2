@@ -1,3 +1,4 @@
+import { ManagerSlots } from '../services/manager-slots';
 import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
@@ -7,15 +8,23 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class SlotsViewComponent implements OnInit {
 
-  @Input() settings: Array<Array<boolean>>;
+  @Input() slots: any;
 
-  constructor() { }
+  constructor() {}
+  
+  ngOnInit() {}
 
-  ngOnInit() {
+  getColumns() {
+    if (this.slots) {
+      return new ManagerSlots(this.slots).getColumns();
+    }
   }
 
-  getLetter(index) {
-    return String.fromCharCode(97 + index);
+  getLines() {
+    if (this.slots) {
+      const lines = Object.keys(this.slots);
+      return lines.map(line => { return {number: line, content: this.slots[line]} });
+    }
   }
 
 }

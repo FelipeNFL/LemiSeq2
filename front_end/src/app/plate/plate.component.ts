@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ChromPackService } from '../services/chrompack.service';
 import { Subscription } from 'rxjs';
+import { SubjectService } from '../services/subject.service';
 
 @Component({
   selector: 'app-plate',
@@ -10,40 +10,37 @@ import { Subscription } from 'rxjs';
 export class PlateComponent implements OnInit {
 
   refreshMetricsSubscription: Subscription
-  slotsSettings: any;
+  slots: any;
   chrompacks: any;
-  idSelected: String;
+  selectedId: String;
+  title: String;
 
-  constructor(private chrompackService: ChromPackService) { }
+  constructor(private subjectService: SubjectService) { }
 
   ngOnInit() {
-
-    if(!this.idSelected){
+    if(!this.selectedId){
       this.fillSettingsDefault();
     }
   }
 
   fillSettingsDefault() {
-    this.slotsSettings = [
-      [false, false, false, false, false, false, false, false],
-      [false, false, false, false, false, false, false, false],
-      [false, false, false, false, false, false, false, false],
-      [false, false, false, false, false, false, false, false],
-      [false, false, false, false, false, false, false, false],
-      [false, false, false, false, false, false, false, false],
-      [false, false, false, false, false, false, false, false],
-      [false, false, false, false, false, false, false, false]
-    ];
+    this.subjectService.getMatrixDefault().subscribe(result => {
+      this.slots = result;
+    }, err => {
+      console.error(err);
+      //TODO exibir modal de erro
+    });
   }
 
-  viewSlots(id){
-    
+  viewSlots(chrompack){
 
-    this.idSelected = id;
+    this.selectedId = chrompack._id;
+    this.title = chrompack.title;
 
-    this.chrompackService.getSlots(this.idSelected).subscribe(result => {
-      this.slotsSettings = result;
+    this.subjectService.getMatrixAll(this.selectedId).subscribe(result => {
+      this.slots = result;
     }, err => {
+      console.error(err);
       //TODO exibir modal de erro
     });
   }

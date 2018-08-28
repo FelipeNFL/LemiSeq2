@@ -6,11 +6,11 @@ import { ChrompackServiceObservable } from '../services/chrompack-observable.ser
 import { Subscription } from 'rxjs';
 
 @Component({
-  selector: 'chrompack-list',
-  templateUrl: './chrompack-list.component.html',
-  styleUrls: ['./chrompack-list.component.css']
+  selector: 'subject-list',
+  templateUrl: './subject-list.component.html',
+  styleUrls: ['./subject-list.component.css']
 })
-export class ChrompackListComponent implements OnInit {
+export class SubjectListComponent implements OnInit {
 
   @Output() viewSlots = new EventEmitter();
   chrompacks: Array<any>;
@@ -42,13 +42,10 @@ export class ChrompackListComponent implements OnInit {
     });
   } 
 
-  select(chrompack) {
-
-    const id = chrompack._id;
-
+  select(id) {
     this.refreshSelection(id);
     this.selectedId = id;
-    this.viewSlots.emit(chrompack);
+    this.viewSlots.emit(id);
   }
 
   add() {
@@ -59,7 +56,6 @@ export class ChrompackListComponent implements OnInit {
     this.chrompackService.getList().subscribe(result => {
       this.chrompacks = result;
     }, err => {
-      console.error(err);
       //TODO exibir modal de erro
     });
   }
@@ -69,8 +65,11 @@ export class ChrompackListComponent implements OnInit {
       this.getList();
       this.chrompackServiceObservable.sendRefreshResult();
     }, err => {
-      console.error(err);
       //TODO exibir modal de erro
     });
+  }
+
+  back() {
+    
   }
 }

@@ -3,19 +3,19 @@
     <thead>
       <tr>
         <th></th>
-        <th *ngFor="let line of settings; let indexLine = index">
-          {{ getLetter(indexLine) | uppercase }}
+        <th *ngFor="let letter of getColumns()">
+          {{ letter | uppercase }}
         </th>
         <th></th>
       </tr>
     </thead>
-    <tr *ngFor="let line of settings; let indexLine = index">
+    <tr *ngFor="let line of getLines()">
       <td class="numberColumn">
-        {{ indexLine }}
+        {{ line.number}}
       </td>
-      <td *ngFor="let cell of line; let indexColumn = index">
-        <div [ngClass]="cell ? 'slot busy' : 'slot free'">
-          {{ getLetter(indexColumn) | uppercase }}{{ indexLine }}
+      <td *ngFor="let letter of getColumns()">
+        <div [ngClass]="line.content[letter] + ' slot'">
+          {{ letter | uppercase }}{{ line.number }}
         </div>
       </td>
       <td class="numberColumn"></td>
@@ -26,13 +26,13 @@
       <div class="col-xs-6">
         <div class="slot free">A0</div>
       </div>
-      <div class="col-sm-3 description">No subject</div>
+      <div class="col-sm-3 description">Free slot</div>
     </div>
     <div class="row">
       <div class="col-xs-6">
         <div class="busy slot">A0</div>
       </div>
-      <div class="col-sm-7 description">Already registered to a subject</div>
+      <div class="col-sm-7 description">Busy slot</div>
     </div>
     <div>
     <div class="row">

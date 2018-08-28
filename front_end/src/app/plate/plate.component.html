@@ -1,9 +1,11 @@
 <div class="option-menu">
-  <h1>Select a plate</h1>
+  <h1 *ngIf="!selectedId">Select a plate</h1>
+  <h1 *ngIf="selectedId">Plate selected: {{ title }}</h1>
   <div class="content">
-    <slots-view [settings]="slotsSettings"></slots-view>
+    <slots-view [slots]="slots"></slots-view>
     <div>
-      <chrompack-list (viewSlots)="viewSlots($event)"></chrompack-list>
+      <chrompack-list (viewSlots)="viewSlots($event)" *ngIf="!selectedId"></chrompack-list>
+      <subject-list *ngIf="selectedId"></subject-list>
     </div>
   </div>
 </div>

@@ -27,10 +27,6 @@ export class ChromPackService {
         return this.http.get(`${environment.bioprocess_api}/chrompack/all`);
     }
 
-    public getSlots(id: String): any {
-        return this.http.get(`${environment.bioprocess_api}/chrompack/${id}`);
-    }
-
     public delete(id: String): any {
         return this.http.delete(`${environment.bioprocess_api}/chrompack/${id}`);
     }

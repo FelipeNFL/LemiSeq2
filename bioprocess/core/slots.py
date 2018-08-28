@@ -1,3 +1,5 @@
+import string
+from pandas import DataFrame
 from enum import Enum
 
 
@@ -8,45 +10,59 @@ class SlotState(Enum):
     FREE = 'free'
 
 
-def initialize_data_matrix(max_position, max_letter):
+class Slots:
 
-    code_max_letter = ord(max_letter.upper())
-    code_letter_a = ord('A')
-    data = {}
+    def __init__(self, config, samples):
 
-    for i in range(code_letter_a, code_max_letter + 1):
+        self._samples = samples
+        self._df_matrix = self._initialize_matrix(config)
 
-        letter = chr(i)
-        data[letter] = [SlotState.NOT_FOUND.value] * max_position
+    def _get_letters_list(self, max_letter):
 
-    return data
+        max_letter = max_letter.upper()
+        alphabet = list(string.ascii_uppercase)
+        index_last_letter = alphabet.index(max_letter) + 1
 
+        return alphabet[:index_last_letter]
 
-def get_matrix_busy_by_subject(config, samples, subject=None):
+    def _initialize_matrix(self, config):
 
-    max_position = config['slots']['max_position']
-    max_letter = config['slots']['max_letter']
-    data = initialize_data_matrix(max_position, max_letter)
+        max_position = config['slots']['max_position']
+        max_letter = config['slots']['max_letter']
 
-    for sample in samples:
+        df = DataFrame(columns=self._get_letters_list(max_letter), index=range(1, max_position + 1))
+        df[:] = SlotState.NOT_FOUND.value
 
-        slot = sample['slot']
+        return df
 
-        if slot != "":
+    def _add_to_df(self, slot, state):
 
-            subject_registered = sample['subject']
+        slot_letter = slot[0]
+        slot_position_number = int(slot[1:3])
 
-            slot_letter = slot[0]
-            slot_position_number = int(slot[1:3])
+        self._df_matrix.at[slot_position_number, slot_letter] = state.value
 
-            if subject:
-                state = SlotState.BUSY if subject == subject_registered else SlotState.FREE
-            else:
-                state = SlotState.BUSY if subject_registered != "" else SlotState.FREE
+    def _get_state_slot(self, subject_registered, subject):
 
-            data[slot_letter][slot_position_number - 1] = state.value
+        if not subject and subject_registered != "":
+            return SlotState.BUSY
 
-        letters = list(data.keys())
-        letters.sort()
+        if subject == subject_registered:
+            return SlotState.BUSY
 
-    return [data[key] for key in letters]
+        return SlotState.FREE
+
+    def get_matrix_busy_by_subject(self, subject=None):
+
+        for sample in self._samples:
+
+            slot = sample['slot']
+
+            if slot != "":
+
+                subject_registered = sample['subject']
+                state = self._get_state_slot(subject_registered, subject)
+
+                self._add_to_df(slot, state)
+
+        return self._df_matrix.to_json(orient='index')

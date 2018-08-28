@@ -12,7 +12,8 @@ from resources.ResourceMetrics import ResourceMetrics
 from resources.ResourceChrompackList import ResourceChrompackList
 from resources.ResourceChrompackUpload import ResourceChrompackUpload
 from resources.ResourceSubject import ResourceSubject
-from resources.ResourceSubjectAll import ResourceSubjectAll
+from resources.ResourceSubjectMatrixAll import ResourceSubjectMatrixAll
+from resources.ResourceSubjectMatrixEmpty import ResourceSubjectMatrixEmpty
 
 logging.basicConfig(level=logging.INFO,
                     format='%(asctime)s %(levelname)s %(message)s',
@@ -71,18 +72,23 @@ api.add_resource(ResourceSubject,
                  methods=['GET'],
                  resource_class_kwargs=params_api)
 
-api.add_resource(ResourceSubjectAll,
-                 '/chrompack/<string:id_chrompack>/subject/all',
+api.add_resource(ResourceSubjectMatrixAll,
+                 '/chrompack/<string:id_chrompack>/subject/matrix/all',
                  methods=['GET'],
                  resource_class_kwargs=params_api)
 
-api.add_resource(ResourceHealth,
-                 '/health',
+
+api.add_resource(ResourceSubjectMatrixEmpty,
+                 '/subject/matrix/default',
                  methods=['GET'])
 
 api.add_resource(ResourceMetrics,
                  '/metrics',
                  methods=['GET'],
                  resource_class_kwargs=params_api)
+
+api.add_resource(ResourceHealth,
+                 '/health',
+                 methods=['GET'])
 
 app.run(host=defines.BIOPROCESS_HOST, port=defines.BIOPROCESS_PORT, debug=True)

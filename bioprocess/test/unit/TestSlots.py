@@ -1,5 +1,5 @@
 import unittest
-from core import slots
+from core.slots import Slots
 
 
 class TestSlots(unittest.TestCase):
@@ -33,12 +33,9 @@ class TestSlots(unittest.TestCase):
                    }
                  }
 
-        matrix = slots.get_matrix_busy_by_subject(config, samples, subject)
-
-        expected = [
-            ['busy', 'free'],
-            ['busy', 'free'],
-        ]
+        slots = Slots(config, samples)
+        matrix = slots.get_matrix_busy_by_subject(subject)
+        expected = '{"1":{"A":"busy","B":"busy"},"2":{"A":"free","B":"free"}}'
 
         self.assertEqual(matrix, expected)
 
@@ -71,12 +68,9 @@ class TestSlots(unittest.TestCase):
                    }
                  }
 
-        matrix = slots.get_matrix_busy_by_subject(config, samples, subject)
-
-        expected = [
-            ['busy', 'free'],
-            ['busy', 'free'],
-        ]
+        slots = Slots(config, samples)
+        matrix = slots.get_matrix_busy_by_subject(subject)
+        expected = '{"1":{"A":"busy","B":"busy"},"2":{"A":"free","B":"free"}}'
 
         self.assertEqual(matrix, expected)
 
@@ -108,12 +102,9 @@ class TestSlots(unittest.TestCase):
                    }
                  }
 
-        matrix = slots.get_matrix_busy_by_subject(config, samples)
-
-        expected = [
-            ['busy', 'free'],
-            ['busy', 'busy'],
-        ]
+        slots = Slots(config, samples)
+        matrix = slots.get_matrix_busy_by_subject()
+        expected = '{"1":{"A":"busy","B":"busy"},"2":{"A":"free","B":"busy"}}'
 
         self.assertEqual(matrix, expected)
 
@@ -141,12 +132,9 @@ class TestSlots(unittest.TestCase):
                    }
                  }
 
-        matrix = slots.get_matrix_busy_by_subject(config, samples)
-
-        expected = [
-            ['busy', 'free'],
-            ['busy', 'not-found'],
-        ]
+        slots = Slots(config, samples)
+        matrix = slots.get_matrix_busy_by_subject()
+        expected = '{"1":{"A":"busy","B":"busy"},"2":{"A":"free","B":"not-found"}}'
 
         self.assertEqual(matrix, expected)
 
@@ -178,13 +166,9 @@ class TestSlots(unittest.TestCase):
                    }
                  }
 
-        matrix = slots.get_matrix_busy_by_subject(config, samples)
-
-        expected = [
-            ['busy', 'free'],
-            ['not-found', 'not-found'],
-            ['busy', 'busy'],
-        ]
+        slots = Slots(config, samples)
+        matrix = slots.get_matrix_busy_by_subject()
+        expected = '{"1":{"A":"busy","B":"not-found","C":"busy"},"2":{"A":"free","B":"not-found","C":"busy"}}'
 
         self.assertEqual(matrix, expected)
 
@@ -216,12 +200,9 @@ class TestSlots(unittest.TestCase):
                    }
                  }
 
-        matrix = slots.get_matrix_busy_by_subject(config, samples)
-
-        expected = [
-            ['busy', 'free'],
-            ['busy', 'busy'],
-        ]
+        slots = Slots(config, samples)
+        matrix = slots.get_matrix_busy_by_subject()
+        expected = '{"1":{"A":"busy","B":"busy"},"2":{"A":"free","B":"busy"}}'
 
         self.assertEqual(matrix, expected)
 

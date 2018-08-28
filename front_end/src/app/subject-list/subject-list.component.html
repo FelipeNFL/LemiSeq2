@@ -1,19 +1,22 @@
 <table>
   <thead>
     <th>
-      Plates registered
+      Subjects
     </th>
   </thead>
   <tbody>
     <tr *ngFor="let chrompack of chrompacks">
-      <td (click)="select(chrompack)" [ngClass]="chrompack.selected ? 'selected' : ''">
+      <!-- <td (click)="select(chrompack._id)" [ngClass]="chrompack.selected ? 'selected' : ''">
         {{ chrompack.title }}
-      </td>
+      </td> -->
     </tr>
   </tbody> 
 </table>
 <div>
   <div class="manager-plates-bar">
+    <i class="material-icons icon icon-back" title="Back to plates list">
+      keyboard_backspace
+    </i>
     <i class="material-icons icon icon-add" (click)="add()" title="Upload new plate">
       note_add
     </i>

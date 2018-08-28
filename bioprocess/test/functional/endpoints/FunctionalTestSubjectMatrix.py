@@ -60,7 +60,7 @@ class FunctionalTestChrompack(unittest.TestCase):
 
         id_chrompack = res.json()[0]['_id']
 
-        url_subject_all = '{url}/{id}/subject/all'.format(url=self.url, id=id_chrompack)
+        url_subject_all = '{url}/{id}/subject/matrix/all'.format(url=self.url, id=id_chrompack)
 
         res = requests.get(url_subject_all, headers=headers)
 
@@ -68,12 +68,19 @@ class FunctionalTestChrompack(unittest.TestCase):
 
         matrix = res.json()
         slots_config = test_utils.get_configs_production()['slots']
-        letters_slot = self.get_letter_list(slots_config['max_letter'])
 
-        self.assertEqual(len(matrix), len(letters_slot))
+        lines = list(matrix.keys())
+        expected_lines = [str(i) for i in range(1, slots_config['max_position'] + 1)]
 
-        for line in matrix:
-            self.assertEqual(len(line), slots_config['max_position'])
+        self.assertEqual(lines, expected_lines)
+
+        expected_columns = self.get_letter_list(slots_config['max_letter'])
+
+        for line_index, column in matrix.items():
+
+            keys = list(column.keys())
+
+            self.assertEqual(keys, expected_columns)
 
 
 if "__main__" == __name__:
