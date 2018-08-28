@@ -5,7 +5,7 @@
     <slots-view [slots]="slots"></slots-view>
     <div>
       <chrompack-list (viewSlots)="viewSlots($event)" *ngIf="!selectedId"></chrompack-list>
-      <subject-list *ngIf="selectedId"></subject-list>
+      <subject-list *ngIf="selectedId" (reset)="reset()"></subject-list>
     </div>
   </div>
 </div>

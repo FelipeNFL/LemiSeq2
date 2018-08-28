@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { SubjectService } from '../services/subject.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-plate',
@@ -10,12 +11,14 @@ import { SubjectService } from '../services/subject.service';
 export class PlateComponent implements OnInit {
 
   refreshMetricsSubscription: Subscription
+  routerSubscription: Subscription
   slots: any;
   chrompacks: any;
   selectedId: String;
   title: String;
 
-  constructor(private subjectService: SubjectService) { }
+  constructor(private subjectService: SubjectService,
+              private route: ActivatedRoute) { }
 
   ngOnInit() {
     if(!this.selectedId){
@@ -43,6 +46,11 @@ export class PlateComponent implements OnInit {
       console.error(err);
       //TODO exibir modal de erro
     });
+  }
+
+  reset() {
+    this.selectedId = null;
+    this.fillSettingsDefault();
   }
 
 }

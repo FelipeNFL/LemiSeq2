@@ -1,9 +1,10 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { UploadComponent } from '../upload/upload.component';
 import { ChromPackService } from '../services/chrompack.service';
 import { ChrompackServiceObservable } from '../services/chrompack-observable.service';
 import { Subscription } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'subject-list',
@@ -12,12 +13,14 @@ import { Subscription } from 'rxjs';
 })
 export class SubjectListComponent implements OnInit {
 
+  @Output() reset = new EventEmitter();
   @Output() viewSlots = new EventEmitter();
   chrompacks: Array<any>;
   selectedId: string;
   refreshMetricsSubscription: Subscription;
 
-  constructor(private modalService: NgbModal,
+  constructor(private router: Router,
+              private modalService: NgbModal,
               private chrompackService: ChromPackService,
               private chrompackServiceObservable: ChrompackServiceObservable) { }
 
@@ -70,6 +73,6 @@ export class SubjectListComponent implements OnInit {
   }
 
   back() {
-    
+    this.reset.emit();
   }
 }
