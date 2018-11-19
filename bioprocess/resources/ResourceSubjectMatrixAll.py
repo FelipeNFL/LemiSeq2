@@ -22,7 +22,7 @@ class ResourceSubjectMatrixAll(Resource):
             samples = self._chrompack.get_samples_by_id(id_chrompack)
 
             if not samples:
-                return Response('chrompack not found', status=400)
+                return Response('chrompack has not samples', status=400)
 
             slots = Slots(self._config_slots, samples)
             matrix = slots.get_matrix_busy_by_subject()

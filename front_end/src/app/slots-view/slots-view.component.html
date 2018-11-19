@@ -14,7 +14,9 @@
         {{ line.number}}
       </td>
       <td *ngFor="let letter of getColumns()">
-        <div [ngClass]="line.content[letter] + ' slot'">
+        <div [ngClass]="getClass(line.content[letter])"
+        (click)="select(letter, line.number, line.content[letter])"
+        title="{{ getTitle(line.content[letter]) }}">
           {{ letter | uppercase }}{{ line.number }}
         </div>
       </td>

@@ -39,6 +39,10 @@ table {
     background-color: gray;
 }
 
+.selectable {
+    cursor: pointer;
+}
+
 thead {
     background-color: rgb(33, 90, 54);
     text-align: center;

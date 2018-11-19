@@ -1,8 +1,9 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../services/auth.service';
 import { UserService } from '../services/user.service';
 import { Subscription } from 'rxjs/Subscription';
 import { ChrompackServiceObservable } from '../services/chrompack-observable.service';
+import { AlertsService } from '../services/alerts.service';
 
 @Component({
   selector: 'footer',
@@ -20,6 +21,7 @@ export class FooterComponent implements OnInit {
   subjects = 0;
 
   constructor(private authService: AuthService,
+              private alerts: AlertsService,
               private userService: UserService,
               private chrompackServiceObservable: ChrompackServiceObservable) { }
 
@@ -44,7 +46,7 @@ export class FooterComponent implements OnInit {
       this.samples = data.samples;
       this.subjects = data.subjects;
     }, err => {
-      console.log(err);
+      this.alerts.error("There are errors to refresh your metrics in footer bar", err);
     });
   }
 

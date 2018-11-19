@@ -83,5 +83,9 @@ class DbConnection:
 
         result = self._conn.get_collection(collection).update_one(filter=_filter, update=data, upsert=True)
 
+        import logging
+        logging.info('update')
+        logging.info(result)
+
         if not result.acknowledged:
             raise Exception('do not possible to update data')

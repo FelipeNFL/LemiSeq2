@@ -4,14 +4,17 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { ToastrModule, ToastrService } from 'ngx-toastr';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppComponent } from './app-component/app.component';
 import { HeaderComponent } from './header/header.component' 
 import { LoginComponent } from './login/login.component';
 import { UploadComponent } from './upload/upload.component';
+import { NewSubjectComponent } from './new-subject/new-subject.component';
 import { LoaderComponent } from './loader/loader.component';
 import { FooterComponent } from './footer/footer.component';
-import { PlateComponent } from './plate/plate.component';
+import { ChrompackComponent } from './chrompack/chrompack.component';
 import { SlotsViewComponent } from './slots-view/slots-view.component';
 import { ChrompackListComponent } from './chrompack-list/chrompack-list.component';
 import { SubjectListComponent } from './subject-list/subject-list.component';
@@ -23,6 +26,9 @@ import { AuthInterceptor } from './authentication/auth-interceptor';
 import { UserService } from './services/user.service';
 import { ChrompackServiceObservable } from './services/chrompack-observable.service';
 import { SubjectService } from './services/subject.service';
+import { AlertsService } from './services/alerts.service';
+import { SubjectComponent } from './subject/subject.component';
+import { ModalConfirmComponent } from './modal-confirm/modal-confirm.component';
 
 @NgModule({
   declarations: [
@@ -30,14 +36,19 @@ import { SubjectService } from './services/subject.service';
     HeaderComponent,
     LoginComponent,
     UploadComponent,
+    NewSubjectComponent,
     LoaderComponent,
     FooterComponent,
-    PlateComponent,
+    ChrompackComponent,
     SlotsViewComponent,
     ChrompackListComponent,
-    SubjectListComponent
+    SubjectListComponent,
+    SubjectComponent,
+    ModalConfirmComponent
   ],
   imports: [
+    ToastrModule.forRoot(),
+    BrowserAnimationsModule,
     BrowserModule,
     HttpClientModule,
     FormsModule,
@@ -52,6 +63,8 @@ import { SubjectService } from './services/subject.service';
     UserService,
     AuthService,
     AuthGuard,
+    AlertsService,
+    ToastrService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,
@@ -59,7 +72,9 @@ import { SubjectService } from './services/subject.service';
     },
   ],
   entryComponents: [
-    UploadComponent
+    UploadComponent,
+    NewSubjectComponent,
+    ModalConfirmComponent
   ]
 })
 export class AppModule { }

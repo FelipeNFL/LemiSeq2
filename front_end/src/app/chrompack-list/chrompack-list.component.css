@@ -51,19 +51,15 @@ thead > tr, tbody {
 .icon {
     margin-left: 25px;
     padding-top: 10px;
+    font-size: 35px;
 }
 
 .icon-add {
     padding-top: 13px;
-    font-size: 35px;
 }
 
 .icon-remove {
     font-size: 40px;
-}
-
-.icon-edit {
-    font-size: 35px;
 }
 
 .manager-plates-bar {

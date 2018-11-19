@@ -12,8 +12,12 @@ from resources.ResourceMetrics import ResourceMetrics
 from resources.ResourceChrompackList import ResourceChrompackList
 from resources.ResourceChrompackUpload import ResourceChrompackUpload
 from resources.ResourceSubject import ResourceSubject
+from resources.ResourceManagerSubject import ResourceManagerSubject
+from resources.ResourceBuildSubject import ResourceBuildSubject
 from resources.ResourceSubjectMatrixAll import ResourceSubjectMatrixAll
 from resources.ResourceSubjectMatrixEmpty import ResourceSubjectMatrixEmpty
+from resources.ResourceManagerSlot import ResourceManagerSlot
+from resources.ResourceUpdateSlot import ResourceUpdateSlot
 
 logging.basicConfig(level=logging.INFO,
                     format='%(asctime)s %(levelname)s %(message)s',
@@ -25,11 +29,8 @@ def initialize_directory_data():
     if not os.path.exists(defines.DATA_PATH):
         os.mkdir(defines.DATA_PATH)
 
-    if not os.path.exists(defines.DATA_CHROMPACK):
-        os.mkdir(defines.DATA_CHROMPACK)
-
-    if not os.path.exists(defines.DATA_SAMPLE):
-        os.mkdir(defines.DATA_SAMPLE)
+    if not os.path.exists(defines.DATA_WORK_DIR):
+        os.mkdir(defines.DATA_WORK_DIR)
 
 
 db_connection = DbConnection(defines.MONGO_HOST,
@@ -38,7 +39,7 @@ db_connection = DbConnection(defines.MONGO_HOST,
                              defines.MONGO_DB,
                              defines.MONGO_PORT)
 
-params_api = {'upload_folder': 'data',
+params_api = {'upload_dir': defines.DATA_WORK_DIR,
               'db_connection': db_connection}
 
 app = Flask(__name__)
@@ -68,19 +69,38 @@ api.add_resource(ResourceChrompackList,
                  resource_class_kwargs=params_api)
 
 api.add_resource(ResourceSubject,
-                 '/chrompack/<string:id_chrompack>/subject/<string:name>',
+                 '/chrompack/<string:id_chrompack>/subject',
                  methods=['GET'],
+                 resource_class_kwargs=params_api)
+
+api.add_resource(ResourceManagerSubject,
+                 '/chrompack/<string:id_chrompack>/subject/<string:name>',
+                 methods=['POST'],
+                 resource_class_kwargs=params_api)
+
+api.add_resource(ResourceBuildSubject,
+                 '/chrompack/<string:id_chrompack>/subject/<string:name>/build',
+                 methods=['POST'],
                  resource_class_kwargs=params_api)
 
 api.add_resource(ResourceSubjectMatrixAll,
-                 '/chrompack/<string:id_chrompack>/subject/matrix/all',
+                 '/chrompack/<string:id_chrompack>/subject/matrix',
                  methods=['GET'],
                  resource_class_kwargs=params_api)
-
 
 api.add_resource(ResourceSubjectMatrixEmpty,
                  '/subject/matrix/default',
                  methods=['GET'])
+
+api.add_resource(ResourceUpdateSlot,
+                 '/chrompack/<string:id_chrompack>/slot/<string:slot>/subject/<string:subject>',
+                 methods=['PUT'],
+                 resource_class_kwargs=params_api)
+
+api.add_resource(ResourceManagerSlot,
+                 '/chrompack/<string:id_chrompack>/slot/<string:slot>/subject',
+                 methods=['DELETE', 'GET'],
+                 resource_class_kwargs=params_api)
 
 api.add_resource(ResourceMetrics,
                  '/metrics',

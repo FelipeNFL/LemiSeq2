@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { HttpErrorResponse } from '@angular/common/http';
 import { AuthService } from '../services/auth.service';
+import { AlertsService } from '../services/alerts.service';
 import { ChrompackServiceObservable } from '../services/chrompack-observable.service';
 
 @Component({
@@ -12,31 +12,28 @@ import { ChrompackServiceObservable } from '../services/chrompack-observable.ser
 })
 export class LoginComponent {
 
-    messageError: string = null;
     loading: boolean = false;
     _usernameModel: string;
     _passwordModel: string;
 
     constructor(private authService: AuthService,
+                private alerts: AlertsService,
                 private router: Router,
                 private chrompackServiceObservable: ChrompackServiceObservable) { }
     
     login(){
-
         this.loading = true;
 
         this.authService.requestToken(this._usernameModel, this._passwordModel).subscribe(
-            (data) => { 
-                this.authService.setSession(data.token, data.fullname);
-                this.loading = false;
-                this.router.navigate(['/plate/upload']);
-                this.chrompackServiceObservable.sendRefreshResult();
-            },
-            (errorResponse: HttpErrorResponse) => {
-                this.loading = false;                 
-                this.messageError = errorResponse.error;
-            }
-        );
-
+        data => { 
+            this.authService.setSession(data.token, data.fullname);
+            this.loading = false;
+            this.router.navigate(['/plate']);
+            this.chrompackServiceObservable.sendRefreshResult();
+        },
+        err => {
+            this.loading = false;              
+            this.alerts.error("Do not possible to do login. Contact the administrator", err);
+        });
     }
 }

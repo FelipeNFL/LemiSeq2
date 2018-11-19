@@ -1,0 +1,9 @@
+.option-menu {
+    width: 70%;
+}
+
+.content {
+    display: flex;
+    margin: 0px;
+    justify-content: center;
+}

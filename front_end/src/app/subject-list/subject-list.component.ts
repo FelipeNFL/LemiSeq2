@@ -1,10 +1,12 @@
-import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input, ViewChild } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { UploadComponent } from '../upload/upload.component';
-import { ChromPackService } from '../services/chrompack.service';
+import { NewSubjectComponent } from '../new-subject/new-subject.component';
 import { ChrompackServiceObservable } from '../services/chrompack-observable.service';
 import { Subscription } from 'rxjs';
+import { SubjectService } from '../services/subject.service';
 import { Router } from '@angular/router';
+import { AlertsService } from '../services/alerts.service';
+import { ModalConfirmComponent } from '../modal-confirm/modal-confirm.component';
 
 @Component({
   selector: 'subject-list',
@@ -13,15 +15,16 @@ import { Router } from '@angular/router';
 })
 export class SubjectListComponent implements OnInit {
 
-  @Output() reset = new EventEmitter();
-  @Output() viewSlots = new EventEmitter();
-  chrompacks: Array<any>;
-  selectedId: string;
+  @Input() idChrompack: string;
+  @Output() eventSelectSubject = new EventEmitter();
+  subjects: Array<any>;
   refreshMetricsSubscription: Subscription;
+  selected: string;
 
-  constructor(private router: Router,
-              private modalService: NgbModal,
-              private chrompackService: ChromPackService,
+  constructor(private modalService: NgbModal,
+              private alerts: AlertsService,
+              private subjectService: SubjectService,
+              private router: Router,
               private chrompackServiceObservable: ChrompackServiceObservable) { }
 
   ngOnInit() {
@@ -32,47 +35,56 @@ export class SubjectListComponent implements OnInit {
     this.getList();
   }
 
-  refreshSelection(id) {
-    this.chrompacks.forEach(chrompack => {
+  refreshSelection(title) {
+    this.subjects.forEach(subject => { subject.selected = title === subject.title });
+  }
 
-      if (chrompack._id === this.selectedId) {
-        chrompack.selected = false;
-      }
-
-      if (chrompack._id === id) {
-        chrompack.selected = true;
-      }
-    });
-  } 
-
-  select(id) {
-    this.refreshSelection(id);
-    this.selectedId = id;
-    this.viewSlots.emit(id);
+  select(subject) {
+    this.selected = subject.title;
+    this.refreshSelection(this.selected);
+    this.eventSelectSubject.emit(this.selected);
   }
 
   add() {
-    this.modalService.open(UploadComponent);
+    const modalRef = this.modalService.open(NewSubjectComponent);
+    modalRef.componentInstance.idChrompack = this.idChrompack;
   }
 
   getList() {
-    this.chrompackService.getList().subscribe(result => {
-      this.chrompacks = result;
+    this.subjectService.getList(this.idChrompack).subscribe(subjects => {
+      this.subjects = subjects.map(subject => { return { title: subject, selected: false} });
     }, err => {
-      //TODO exibir modal de erro
+      this.alerts.error("There are errors to get subject's list", err);
     });
   }
 
   delete() {
-    this.chrompackService.delete(this.selectedId).subscribe(() => {
-      this.getList();
-      this.chrompackServiceObservable.sendRefreshResult();
-    }, err => {
-      //TODO exibir modal de erro
+
+    const modalRef = this.modalService.open(ModalConfirmComponent);
+
+    modalRef.componentInstance.title = "DELETE SUBJECT";
+    modalRef.componentInstance.text = `Do you really want to delete the subject ${this.selected}?`;
+    modalRef.componentInstance.eventYes.subscribe(() => {
+
+      this.subjectService.delete(this.idChrompack, this.selected).subscribe(() => {
+        this.getList();
+        this.chrompackServiceObservable.sendRefreshResult();
+      }, err => {
+        this.alerts.error("There are errors to delete selected subject", err);
+      });
     });
   }
 
+  rename() {
+    //TODO abrir modal de renomeação de subject
+  }
+
   back() {
-    this.reset.emit();
+    this.router.navigateByUrl(`chrompack/${this.idChrompack}`);
+  }
+  view() {
+    this.subjectService.build(this.idChrompack,  this.selected).subscribe(() => {
+      this.alerts.success('Boa mlk');
+    }, err => { this.alerts.error("Errou", err)}  )
   }
 }

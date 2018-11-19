@@ -7,7 +7,7 @@ from core import defines
 from core.slots import SlotState
 
 
-class FunctionalTestChrompack(unittest.TestCase):
+class FunctionalTestSubjectMatrixDefault(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
@@ -54,7 +54,7 @@ class FunctionalTestChrompack(unittest.TestCase):
         slots_config = test_utils.get_configs_production()['slots']
 
         lines = list(matrix.keys())
-        expected_lines = [str(i) for i in range(1, slots_config['max_position'] + 1)]
+        expected_lines = [str(i).zfill(2) for i in range(1, slots_config['max_position'] + 1)]
 
         self.assertEqual(lines, expected_lines)
 
@@ -67,7 +67,7 @@ class FunctionalTestChrompack(unittest.TestCase):
             self.assertEqual(keys, expected_columns)
 
             for cell in column.values():
-                self.assertEqual(cell, SlotState.NOT_FOUND.value)
+                self.assertEqual(cell, None)
 
 
 if "__main__" == __name__:

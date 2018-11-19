@@ -1,0 +1,12 @@
+<!-- TODO renomear classe option-menu para nome mais genérico-->
+<div class="option-menu">
+    <h1>
+      {{ title | uppercase }}
+      <i class="material-icons close close-icon" (click)="close()">close</i>
+    </h1>
+    <p class="text">
+      {{ text }}
+    </p>
+    <p><button (click)="yes()">Yes <i class="material-icons button-icon">done</i></button></p>
+    <p><button (click)="close()">No <i class="material-icons button-icon">close</i></button></p>
+</div>

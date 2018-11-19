@@ -1,11 +1,5 @@
-import os
 from bson.objectid import ObjectId
-from zipfile import ZipFile
 from datetime import datetime
-
-
-class FileInvalid(Exception):
-    pass
 
 
 #TODO precisa testar essa classe
@@ -19,7 +13,7 @@ class Chrompack:
     def save(self, title, user, uploaded):
 
         if not isinstance(title, str):
-            raise TypeError('desc must be a str, not {}'.format(type(desc)))
+            raise TypeError('desc must be a str, not {}'.format(type(title)))
 
         if not isinstance(user, str):
             raise TypeError('user must be a str, not {}'.format(type(user)))
@@ -31,7 +25,7 @@ class Chrompack:
 
         id_chrompack = self._dbconnection.insert(data, self._collection)
 
-        return id_chrompack
+        return str(id_chrompack)
 
     def _add_sample(self, sample, id_chrompack):
         command_update = {'$push': {'samples': sample}}
@@ -40,56 +34,36 @@ class Chrompack:
     def delete(self, id):
         return self._dbconnection.remove({'_id': ObjectId(id)}, self._collection)
 
-    @staticmethod
-    def get_filename(id_chrompack):
-        return '{}.zip'.format(id_chrompack)
+    def add_subject(self, name, id_chrompack):
+        command_update = {'$push': {'subjects': name}}
+        self._dbconnection.update(command_update, {'_id': ObjectId(id_chrompack)}, self._collection)
+
+    def get_subjects_by_id(self, id_chrompack):
+
+        data = self._dbconnection.find({'_id': ObjectId(id_chrompack)}, self._collection, {'subjects': 1})[0]
+
+        if 'subjects' in data:
+            return data['subjects']
+
+        return []
 
     def get_list(self, username):
         return self._dbconnection.find({'user': username}, self._collection, {'_id': 1, 'title': 1})
 
-    #TODO testar quando id não existir
     def get_samples_by_id(self, id):
 
-        data = self._dbconnection.find({'_id': ObjectId(id)}, self._collection, {'samples': 1})[0]
+        data = self._dbconnection.find({'_id': ObjectId(id)}, self._collection, {'samples': 1})
+
+        if not len(data):
+            return None
+
+        data = data[0]
 
         if 'samples' in data:
             return data['samples']
 
         return None
 
-    def extract_samples(self, filename_zip, id_chrompack, upload_dir):
-
-        #TODO talvez isso mereça ser encapsulado em outra classe
-
-        sample_list = []
-        zf = ZipFile(filename_zip)
-
-        for pos, file in enumerate(zf.namelist()):
-
-            file_format = file[-3:]
-
-            if file_format != 'ab1':
-                raise FileInvalid
-
-            slot = file[-10:-7]  # .rstrip('.ab1')[-6:-3] #[-3:]  #input filename format
-
-            if slot[0] not in 'ABCDEFGH':
-                slot = ""
-
-            if slot[1:3] not in ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12']:
-                slot = ""
-
-            sample = {'filename': file, 'slot': slot, 'subject': ''}
-
-            self._add_sample(sample, id_chrompack)
-
-            filename_extracted = zf.extract(file, upload_dir)
-            new_filename = "{id}_sample{sample_num}.ab1".format(id=id_chrompack, sample_num=pos)
-            new_filename_absolut = upload_dir + '/' + new_filename
-
-            os.rename(filename_extracted, new_filename_absolut)
-            # p = subprocess.Popen([config.PHREDBIN, sfname, '-pd', config.PHDPOOL],
-            #                      env={'PHRED_PARAMETER_FILE': config.PHREDPAR})
-            # p.wait()
-
-        return sample_list
+    def update_all_samples(self, id_chrompack, samples):
+        command_update = {'$set': {'samples': samples}}
+        return self._dbconnection.update(command_update, {'_id': ObjectId(id_chrompack)}, self._collection)

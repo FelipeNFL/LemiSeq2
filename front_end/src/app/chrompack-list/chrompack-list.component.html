@@ -1,7 +1,7 @@
 <table>
   <thead>
     <th>
-      Plates registered
+      CHROMPACKS
     </th>
   </thead>
   <tbody>
@@ -17,11 +17,11 @@
     <i class="material-icons icon icon-add" (click)="add()" title="Upload new plate">
       note_add
     </i>
-    <div *ngIf="selectedId">
+    <div *ngIf="selectedChrompack">
       <i class="material-icons icon icon-remove" (click)="delete()" title="Delete plate selected">
         delete_forever
       </i>
-      <i class="material-icons icon icon-edit" title="Manage plate's subjects">
+      <i class="material-icons icon icon-edit" title="Manage plate's subjects" (click)="editSubjects()">
         edit
       </i>
     </div>

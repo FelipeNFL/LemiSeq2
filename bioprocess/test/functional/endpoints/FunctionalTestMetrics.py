@@ -15,6 +15,9 @@ class FunctionalTestMetrics(unittest.TestCase):
         res = requests.get(self.url)
         self.assertEqual(res.status_code, 401)
 
+    def test_add_subject(self):
+        pass
+
     def test_content_returned(self):
         headers = test_utils.get_authorization(self.user_test)
         res = requests.get(self.url, headers=headers)

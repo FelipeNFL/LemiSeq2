@@ -27,7 +27,10 @@ BIOPROCESS_PORT = get_environment_variable('BIOPROCESS_PORT')
 SECRET_KEY = get_environment_variable('SECRET_KEY')
 
 DATA_PATH = 'data'
-
-DATA_CHROMPACK = DATA_PATH + '/chrompack'
-DATA_SAMPLE = DATA_PATH + '/samplepool'
+DATA_WORK_DIR = DATA_PATH + '/work'
 CONFIG_PATH = 'config.json'
+
+PHRED_BIN = 'tools/phred'
+PHRED_PARAMETERS_FILE = 'tools/data/phred_parameters.dat'
+PHD2FAS_BIN = 'tools/phd2fas'
+PHRAP_BIN = 'tools/phrap'

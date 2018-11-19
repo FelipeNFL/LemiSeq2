@@ -1,0 +1,11 @@
+<div class="option-menu">
+  <h1>Manage subjects</h1>
+  <div class="content">
+    <slots-view [slots]="slots" [isSelectable]="selectedTitle" (eventSelectSlot)="selectSlot($event)"></slots-view>
+    
+    <!-- <app-test [slots]="slots"></app-test> -->
+    
+    <subject-list [idChrompack]="idChrompack" (reset)="reset()"
+    (eventSelectSubject)="selectSubject($event)"></subject-list>
+  </div>
+</div>

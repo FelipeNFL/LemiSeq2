@@ -1,0 +1,8 @@
+<div class="option-menu">
+    <h1>NEW SUBJECT<i class="material-icons close close-icon" (click)="close()">close</i> </h1>
+    <div *ngIf="loading">
+        <loader class="loader"></loader>
+    </div>
+    <p><input type="text" placeholder="Title" [(ngModel)]="_title"></p>
+    <p><button (click)="submit()">OK</button></p>
+</div>

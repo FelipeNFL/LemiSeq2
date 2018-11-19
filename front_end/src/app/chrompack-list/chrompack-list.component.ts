@@ -4,6 +4,8 @@ import { UploadComponent } from '../upload/upload.component';
 import { ChromPackService } from '../services/chrompack.service';
 import { ChrompackServiceObservable } from '../services/chrompack-observable.service';
 import { Subscription } from 'rxjs';
+import { AlertsService } from '../services/alerts.service';
+import { ModalConfirmComponent } from '../modal-confirm/modal-confirm.component';
 
 @Component({
   selector: 'chrompack-list',
@@ -12,12 +14,14 @@ import { Subscription } from 'rxjs';
 })
 export class ChrompackListComponent implements OnInit {
 
-  @Output() viewSlots = new EventEmitter();
-  chrompacks: Array<any>;
-  selectedId: string;
+  @Output() eventSelectChrompack = new EventEmitter();
+  @Output() eventEditSubjects = new EventEmitter();
   refreshMetricsSubscription: Subscription;
+  chrompacks: Array<any>;
+  selectedChrompack: any;
 
   constructor(private modalService: NgbModal,
+              private alerts: AlertsService,
               private chrompackService: ChromPackService,
               private chrompackServiceObservable: ChrompackServiceObservable) { }
 
@@ -29,26 +33,19 @@ export class ChrompackListComponent implements OnInit {
     this.getList();
   }
 
-  refreshSelection(id) {
-    this.chrompacks.forEach(chrompack => {
-
-      if (chrompack._id === this.selectedId) {
-        chrompack.selected = false;
-      }
-
-      if (chrompack._id === id) {
-        chrompack.selected = true;
-      }
-    });
-  } 
-
   select(chrompack) {
-
     const id = chrompack._id;
 
-    this.refreshSelection(id);
-    this.selectedId = id;
-    this.viewSlots.emit(chrompack);
+    this.chrompacks.forEach(chrompack => {
+      chrompack.selected = chrompack._id === id;
+    });
+
+    this.selectedChrompack = chrompack;
+    this.eventSelectChrompack.emit(this.selectedChrompack);
+  }
+
+  editSubjects() {
+    this.eventEditSubjects.emit(this.selectedChrompack);
   }
 
   add() {
@@ -59,18 +56,23 @@ export class ChrompackListComponent implements OnInit {
     this.chrompackService.getList().subscribe(result => {
       this.chrompacks = result;
     }, err => {
-      console.error(err);
-      //TODO exibir modal de erro
+      this.alerts.error("There are errors to get chrompack's list in server", err);
     });
   }
 
   delete() {
-    this.chrompackService.delete(this.selectedId).subscribe(() => {
-      this.getList();
-      this.chrompackServiceObservable.sendRefreshResult();
-    }, err => {
-      console.error(err);
-      //TODO exibir modal de erro
+
+    const modalRef = this.modalService.open(ModalConfirmComponent);
+    
+    modalRef.componentInstance.title = 'DELETE CHROMPACK';
+    modalRef.componentInstance.text = `Do you really want to delete the chrompack ${this.selectedChrompack.title}?`;
+    modalRef.componentInstance.eventYes.subscribe(() => {
+      this.chrompackService.delete(this.selectedChrompack._id).subscribe(() => {
+        this.getList();
+        this.chrompackServiceObservable.sendRefreshResult();
+      }, err => {
+        this.alerts.error("There are errors to delete chrompack", err);
+      });
     });
   }
 }

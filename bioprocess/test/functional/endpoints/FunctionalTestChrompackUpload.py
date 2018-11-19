@@ -97,10 +97,10 @@ class FunctionalTestChrompack(unittest.TestCase):
 
         self.assertEqual(len(chrompacks['samples']), 4)
 
-        self.assertEqual(chrompacks['samples'][0]['filename'], 'sample_1.ab1')
-        self.assertEqual(chrompacks['samples'][1]['filename'], 'sample_2.ab1')
-        self.assertEqual(chrompacks['samples'][2]['filename'], 'sample_3.ab1')
-        self.assertEqual(chrompacks['samples'][3]['filename'], 'sample_4.ab1')
+        self.assertEqual(chrompacks['samples'][0]['filename'], '1_A01_01.ab1')
+        self.assertEqual(chrompacks['samples'][1]['filename'], '2_B01_03.ab1')
+        self.assertEqual(chrompacks['samples'][2]['filename'], '3_C01_05.ab1')
+        self.assertEqual(chrompacks['samples'][3]['filename'], '4_D01_07.ab1')
 
 
 if "__main__" == __name__:

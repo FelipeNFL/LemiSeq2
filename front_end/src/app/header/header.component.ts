@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core'
+import { Component } from '@angular/core'
 import { AuthService } from '../services/auth.service';
 import { Subscription } from 'rxjs/Subscription';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -11,7 +11,6 @@ import { UploadComponent } from '../upload/upload.component';
         './header.component.css'
     ]
 })
-
 export class HeaderComponent {
 
     refreshLogout: Subscription;

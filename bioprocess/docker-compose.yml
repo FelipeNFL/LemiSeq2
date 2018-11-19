@@ -1,10 +1,21 @@
+# Define a versão de arquivo Docker Compose
+# utilizada
 version: '2'
 
+# Cria uma rede para o conjunto de contêineres
+# Se outro docker-compose.yml criar uma rede
+# com o mesmo nome, elas se unirão
 networks:
   lemiseqnet:
     driver: bridge
 
+# Define a lista de contêineres que irão
+# ser executados
 services:
+
+  # Baixa um contêiner com o MongoDB, definindo
+  # a porta que ele irá utilizar, rede e o 
+  # arquivo com as configurações de ambiente
   mongo:
     image: aashreys/mongo-auth:latest
     ports:
@@ -12,6 +23,13 @@ services:
     env_file: ./infra/mongo.env
     networks:
       - lemiseqnet
+
+  # Cria o contêiner da API de bioprocessamento,
+    # bem como o comando que precisa ser executado,
+  # o volume (código-fonte e dados) do sistema,
+  # porta, arquivo de configuração de ambiente,
+  # rede e a depêndencia (em relação à ordem de 
+  # "boot") de outro contêiner
   bioprocess:
     build: .
     command: bash -c 'sleep 20 && python service.py'

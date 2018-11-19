@@ -35,14 +35,18 @@ class FunctionalTestUser(unittest.TestCase):
         id_chrompack_1 = model_chrompack.save('title_1', self.user_test, datetime.now())
         id_chrompack_2 = model_chrompack.save('title_1', self.user_test, datetime.now())
 
-        num_samples_each_chrompack = 4
+        num_samples_in_each_chrompack = 4
 
-        for i in range(0, num_samples_each_chrompack):
-            model_chrompack._add_sample('sample_test', id_chrompack_1)
+        model_chrompack.update_all_samples(id_chrompack_1,
+                                           ["sample" for _ in range(0, num_samples_in_each_chrompack)])
 
-        for i in range(0, num_samples_each_chrompack):
-            model_chrompack._add_sample('sample_test', id_chrompack_2)
+        model_chrompack.update_all_samples(id_chrompack_2,
+                                           ["sample" for _ in range(0, num_samples_in_each_chrompack)])
 
         model_user = User(self.db, self.user_test)
 
-        self.assertEqual(model_user.get_num_samples(), num_samples_each_chrompack * 2)
+        self.assertEqual(model_user.get_num_samples(), num_samples_in_each_chrompack * 2)
+
+
+if __name__ == '__main__':
+    unittest.main()

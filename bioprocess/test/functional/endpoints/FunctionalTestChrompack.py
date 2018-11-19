@@ -1,3 +1,4 @@
+import os
 import unittest
 import requests
 import jwt
@@ -21,6 +22,10 @@ class FunctionalTestChrompack(unittest.TestCase):
     @classmethod
     def tearDownClass(cls):
         cls.db_connection.remove({'user': cls.user_test}, cls.collection)
+
+    def count_folder_in_director(self, path):
+        folders = [dirname for _, dirname, _ in os.walk(path)]
+        return len(folders)
 
     def test_request_without_authorization(self):
         url = '{url}/{id}'.format(url=self.url, id='5b7091ba8dff0c000ec3eca4')
@@ -47,6 +52,9 @@ class FunctionalTestChrompack(unittest.TestCase):
 
     def test_delete_successful(self):
 
+        work_dir = defines.DATA_WORK_DIR
+        chrompacks_registered_before_test = self.count_folder_in_director(defines.DATA_WORK_DIR)
+
         headers = test_utils.get_authorization(self.user_test)
 
         with open(test_utils.DATA_TEST_PATH + 'test_many_samples.zip', 'rb') as fp:
@@ -67,8 +75,12 @@ class FunctionalTestChrompack(unittest.TestCase):
         self.assertEqual(res.status_code, 200)
 
         res = requests.get(url_get_list, headers=headers)
+        user_folder = '{work_dir}/{chrompack}'.format(work_dir=work_dir, chrompack=id_chrompack)
+        chrompacks_registered_after_delete = self.count_folder_in_director(defines.DATA_WORK_DIR)
 
         self.assertEqual(res.json(), [])
+        self.assertFalse(os.path.isdir(user_folder))
+        self.assertEqual(chrompacks_registered_after_delete, chrompacks_registered_before_test)
 
 
 if "__main__" == __name__:

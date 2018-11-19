@@ -5,7 +5,7 @@ from test import test_utils
 from core import defines
 
 
-class FunctionalTestChrompack(unittest.TestCase):
+class FunctionalTestSubjectMatrix(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
@@ -28,7 +28,7 @@ class FunctionalTestChrompack(unittest.TestCase):
         return [chr(letter_code) for letter_code in range(code_letter_a, code_max_letter + 1)]
 
     def test_request_without_authorization(self):
-        url = '{url}/{id}/subject/all'.format(url=self.url, id='5b7091ba8dff0c000ec3eca4')
+        url = '{url}/{id}/subject/matrix'.format(url=self.url, id='5b7091ba8dff0c000ec3eca4')
         res = requests.get(url)
         self.assertEqual(res.status_code, 401)
 
@@ -37,7 +37,7 @@ class FunctionalTestChrompack(unittest.TestCase):
         token = jwt.encode({'user': 'test'}, secret_key).decode()
         headers = {'Authorization': 'Bearer {}'.format(token)}
 
-        url = '{url}/{id}/subject/all'.format(url=self.url, id='5b7091ba8dff0c000ec3eca4')
+        url = '{url}/{id}/subject/matrix'.format(url=self.url, id='5b7091ba8dff0c000ec3eca4')
         res = requests.get(url=url, headers=headers)
 
         self.assertEqual(res.status_code, 422)
@@ -60,7 +60,7 @@ class FunctionalTestChrompack(unittest.TestCase):
 
         id_chrompack = res.json()[0]['_id']
 
-        url_subject_all = '{url}/{id}/subject/matrix/all'.format(url=self.url, id=id_chrompack)
+        url_subject_all = '{url}/{id}/subject/matrix'.format(url=self.url, id=id_chrompack)
 
         res = requests.get(url_subject_all, headers=headers)
 

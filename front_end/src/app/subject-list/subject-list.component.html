@@ -1,31 +1,31 @@
 <table>
   <thead>
     <th>
-      Subjects
+      SUBJECTS
     </th>
   </thead>
   <tbody>
-    <tr *ngFor="let chrompack of chrompacks">
-      <!-- <td (click)="select(chrompack._id)" [ngClass]="chrompack.selected ? 'selected' : ''">
-        {{ chrompack.title }}
-      </td> -->
+    <tr *ngFor="let subject of subjects">
+      <td (click)="select(subject)" [ngClass]="subject.selected ? 'selected' : ''">
+        {{ subject.title }}
+      </td>
     </tr>
   </tbody> 
 </table>
 <div>
   <div class="manager-plates-bar">
-    <i class="material-icons icon icon-back" (click)="back()" title="Back to plates list">
+    <i class="material-icons icon icon-back" (click)="back()" title="Back to chrompacks">
       keyboard_backspace
     </i>
-    <i class="material-icons icon icon-add" (click)="add()" title="Upload new plate">
+    <i class="material-icons icon icon-add" (click)="add()" title="Add new subject">
       note_add
     </i>
-    <div *ngIf="selectedId">
-      <i class="material-icons icon icon-remove" (click)="delete()" title="Delete plate selected">
+    <div *ngIf="selected">
+      <i class="material-icons icon icon-remove" (click)="delete()" title="Delete subject">
         delete_forever
       </i>
-      <i class="material-icons icon icon-edit" title="Manage plate's subjects">
-        edit
+      <i class="material-icons icon" title="Analyze subject" (click)="view()">
+        search
       </i>
     </div>
   </div>

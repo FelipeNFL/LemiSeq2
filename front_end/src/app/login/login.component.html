@@ -3,12 +3,17 @@
     <div *ngIf="loading">
         <loader class="loader"></loader>
     </div>
-    <div class="alert alert-danger" *ngIf="messageError">
-        <strong>Danger!</strong> {{messageError}}
-    </div>
     <form>
-        <p><input type="text" [(ngModel)]="_usernameModel" [ngModelOptions]="{standalone: true}"placeholder="UNIFESP Intranet User"></p>
-        <p><input type="password" [(ngModel)]="_passwordModel" [ngModelOptions]="{standalone: true}" placeholder="Password"></p>
-        <p><button (click)="login()" [disabled]="!_usernameModel || !_passwordModel">OK</button></p>
+        <p>
+            <input type="text" [(ngModel)]="_usernameModel"
+            [ngModelOptions]="{standalone: true}"placeholder="UNIFESP Intranet User">
+        </p>
+        <p>
+            <input type="password" [(ngModel)]="_passwordModel"
+            [ngModelOptions]="{standalone: true}" placeholder="Password">
+        </p>
+        <p>
+            <button (click)="login()" [disabled]="!_usernameModel || !_passwordModel">OK</button>
+        </p>
     </form>
 </div>
