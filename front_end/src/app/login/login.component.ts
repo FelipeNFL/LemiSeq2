@@ -28,7 +28,7 @@ export class LoginComponent {
         data => { 
             this.authService.setSession(data.token, data.fullname);
             this.loading = false;
-            this.router.navigate(['/plate']);
+            this.router.navigate(['/chrompack']);
             this.chrompackServiceObservable.sendRefreshResult();
         },
         err => {
