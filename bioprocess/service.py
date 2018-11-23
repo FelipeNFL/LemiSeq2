@@ -1,5 +1,6 @@
 import os
 import logging
+import json
 from flask import Flask
 from flask_restful import Api
 from flask_cors import CORS
@@ -39,8 +40,12 @@ db_connection = DbConnection(defines.MONGO_HOST,
                              defines.MONGO_DB,
                              defines.MONGO_PORT)
 
+with open('config.json', 'r') as fp:
+    configs = json.loads(fp.read())
+
 params_api = {'upload_dir': defines.DATA_WORK_DIR,
-              'db_connection': db_connection}
+              'db_connection': db_connection,
+              'configs': configs}
 
 app = Flask(__name__)
 
@@ -90,7 +95,8 @@ api.add_resource(ResourceSubjectMatrixAll,
 
 api.add_resource(ResourceSubjectMatrixEmpty,
                  '/subject/matrix/default',
-                 methods=['GET'])
+                 methods=['GET'],
+                 resource_class_kwargs=params_api)
 
 api.add_resource(ResourceUpdateSlot,
                  '/chrompack/<string:id_chrompack>/slot/<string:slot>/subject/<string:subject>',

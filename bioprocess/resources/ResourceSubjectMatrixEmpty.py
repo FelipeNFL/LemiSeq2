@@ -9,10 +9,8 @@ from core.slots import Slots
 
 class ResourceSubjectMatrixEmpty(Resource):
 
-    def __init__(self):
-
-        with open('config.json', 'r') as fp:
-            self._config_slots = json.loads(fp.read())
+    def __init__(self, **kwargs):
+        self._config_slots = kwargs['configs']
 
     @jwt_required
     def get(self):

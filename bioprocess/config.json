@@ -1,27 +1,6 @@
 {
-  "_id": "5bc289102bef690097bb25ce",
-  "title": "teste",
-  "user": "felipe.nunes",
-  "uploaded": "2018-10-14T00:08:48.471Z",
-  "samples": [
-    {
-      "filename": "10_B02_04.ab1",
-      "slot": "B02",
-      "subject": "teste"
-    },
-    {
-      "filename": "11_C02_06.ab1",
-      "slot": "C02",
-      "subject": "teste2"
-    },
-    {
-      "filename": "12_D02_08.ab1",
-      "slot": "D02",
-      "subject": ""
-    }
-  ],
-  "subjects": [
-    "teste",
-    "teste2"
-  ]
+  "slots": {
+    "max_position": 12,
+    "max_letter": "H"
+  }
 }
