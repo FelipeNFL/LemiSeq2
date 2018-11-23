@@ -12,6 +12,7 @@ export class ChrompackComponent implements OnInit {
 
   slots: any;
   selectedId: String;
+  title: String;
 
   constructor(private router: Router,
               private route: ActivatedRoute,
@@ -42,6 +43,7 @@ export class ChrompackComponent implements OnInit {
   selectChrompack(chrompack) {
 
     this.selectedId = chrompack._id;
+    this.title = chrompack.title;
 
     this.subjectService.getMatrixAll(this.selectedId).subscribe(result => {
       this.slots = result;
