@@ -19,6 +19,9 @@ from resources.ResourceSubjectMatrixAll import ResourceSubjectMatrixAll
 from resources.ResourceSubjectMatrixEmpty import ResourceSubjectMatrixEmpty
 from resources.ResourceManagerSlot import ResourceManagerSlot
 from resources.ResourceUpdateSlot import ResourceUpdateSlot
+from resources.ResourceSubjectDownload import ResourceSubjectDownload
+from resources.ResourceSubjectContigs import ResourceSubjectContigs
+from resources.ResourceSamplesTraces import ResourceSamplesTraces
 
 logging.basicConfig(level=logging.INFO,
                     format='%(asctime)s %(levelname)s %(message)s',
@@ -85,7 +88,17 @@ api.add_resource(ResourceManagerSubject,
 
 api.add_resource(ResourceBuildSubject,
                  '/chrompack/<string:id_chrompack>/subject/<string:name>/build',
-                 methods=['POST'],
+                 methods=['POST', 'GET'],
+                 resource_class_kwargs=params_api)
+
+api.add_resource(ResourceSubjectDownload,
+                 '/chrompack/<string:id_chrompack>/subject/<string:name>/build/download',
+                 methods=['GET'],
+                 resource_class_kwargs=params_api)
+
+api.add_resource(ResourceSubjectContigs,
+                 '/chrompack/<string:id_chrompack>/subject/<string:name>/build/contigs',
+                 methods=['GET'],
                  resource_class_kwargs=params_api)
 
 api.add_resource(ResourceSubjectMatrixAll,

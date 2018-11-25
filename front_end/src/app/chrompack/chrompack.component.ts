@@ -53,7 +53,7 @@ export class ChrompackComponent implements OnInit {
   }
 
   editSubjects(chrompack){
-    this.router.navigateByUrl(`subject/${chrompack._id}`);
+    this.router.navigateByUrl(`chrompack/${chrompack._id}/subject`);
   }
 
   reset() {

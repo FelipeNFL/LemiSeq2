@@ -20,9 +20,6 @@ class ResourceManagerSlot(Resource):
 
             for sample in samples:
 
-                logging.info('slot loop')
-                logging.info(sample['slot'])
-
                 if sample['slot'] == slot:
                     sample['subject'] = ''
 

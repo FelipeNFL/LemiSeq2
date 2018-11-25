@@ -1,0 +1,20 @@
+.option-menu {
+    width: 100%;
+    margin: 0;
+}
+
+.nucleotides {
+    font-size: 14px;
+    color: black;
+}
+
+.content {
+    width: 95%;
+    margin: 0 auto;
+}
+
+.close-icon {
+    font-size: 25px;
+    padding-right: 10px;
+    vertical-align: top;
+}

@@ -18,7 +18,6 @@ import { ChrompackComponent } from './chrompack/chrompack.component';
 import { SlotsViewComponent } from './slots-view/slots-view.component';
 import { ChrompackListComponent } from './chrompack-list/chrompack-list.component';
 import { SubjectListComponent } from './subject-list/subject-list.component';
-
 import { AuthService } from './services/auth.service';
 import { ChromPackService } from './services/chrompack.service';
 import { AuthGuard } from './authentication/auth.guard';
@@ -29,6 +28,9 @@ import { SubjectService } from './services/subject.service';
 import { AlertsService } from './services/alerts.service';
 import { SubjectComponent } from './subject/subject.component';
 import { ModalConfirmComponent } from './modal-confirm/modal-confirm.component';
+import { AssemblyComponent } from './assembly/assembly.component';
+import { SequenceViewerComponent } from './sequence-viewer/sequence-viewer.component';
+import { AlignmentViewerComponent } from './alignment-viewer/alignment-viewer.component';
 
 @NgModule({
   declarations: [
@@ -44,7 +46,10 @@ import { ModalConfirmComponent } from './modal-confirm/modal-confirm.component';
     ChrompackListComponent,
     SubjectListComponent,
     SubjectComponent,
-    ModalConfirmComponent
+    ModalConfirmComponent,
+    AssemblyComponent,
+    SequenceViewerComponent,
+    AlignmentViewerComponent
   ],
   imports: [
     ToastrModule.forRoot(),
@@ -74,7 +79,9 @@ import { ModalConfirmComponent } from './modal-confirm/modal-confirm.component';
   entryComponents: [
     UploadComponent,
     NewSubjectComponent,
-    ModalConfirmComponent
+    ModalConfirmComponent,
+    SequenceViewerComponent,
+    AlignmentViewerComponent
   ]
 })
 export class AppModule { }

@@ -3,6 +3,7 @@ import jwt
 from flask_restful import Resource
 from flask import request, Response
 from commom import defines
+import logging
 
 
 class RequestToken(Resource):

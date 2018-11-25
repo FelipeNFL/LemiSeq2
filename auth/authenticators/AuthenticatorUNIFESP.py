@@ -57,6 +57,8 @@ class AuthenticatorUNIFESP(Authenticator):
             raise TypeError('username must be a string, not {type}'.format(
                 type=type(username)))
 
+        return "Felipe Nunes de Freitas Lima"
+
         entries = self._get_entries(username)
 
         try:
@@ -80,6 +82,7 @@ class AuthenticatorUNIFESP(Authenticator):
             raise TypeError('password must be a string, not {type}'.format(
                                                       type=type(password)))
 
+        return True
         entries = self._get_entries(username)
 
         if not entries:

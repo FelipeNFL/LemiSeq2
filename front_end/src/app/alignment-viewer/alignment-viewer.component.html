@@ -1,0 +1,18 @@
+<div class="option-menu">
+  <h1>
+    ALIGNMENT
+    <i class="material-icons close close-icon" (click)="close()">close</i>
+  </h1>
+  <div class="content">
+    <div class="row contig">
+      <div class="col-sm-4">CONTIG</div>
+      <div class="col-sm-8"><code class="sequence">{{ sequenceBase }}</code></div>
+    </div>
+    <div class="row" *ngFor="let sample of sequencesToAlign">
+      <div class="col-sm-4">{{ sample.sample }}</div>
+      <div class="col-sm-8">
+        <code class="sequence">{{ sample.sequence }}</code>
+      </div>
+    </div>
+  </div>
+</div>

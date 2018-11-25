@@ -1,0 +1,57 @@
+<div class="option-menu">
+  <h1>ASSEMBLY RESULT</h1>
+  <div class="content">
+        <div class="contig" *ngFor="let contig of contigs; let i = index">
+          <table>
+            <thead>
+              <th class="contig-name">
+                {{ contig.name }}
+              </th>
+              <th class="options" (click)="viewSequence(i)">
+                <a>View Sequence <i class="material-icons thead-icon">text_rotation_none</i></a>
+              </th>
+              <th class="options" (click)="viewAlignment(i)">
+                <a>View Alignment <i class="material-icons thead-icon">line_style</i></a>
+              </th>
+            </thead>
+            <tbody>
+              <tr *ngFor="let slot of contig.alignments">
+                <td class="sample-item">
+                  {{ slot.sample }}
+                </td>
+                <td></td>
+                <td class="options">
+                  <a>View Trace Data</a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="buttons">
+          <div class="row">
+            <div class="col-md-3">
+              <p class="download-button">
+                <button (click)="download()">
+                  Download Assembly Files <i class="icons-footer material-icons">cloud_download</i>
+                </button>
+              </p>
+            </div>
+            <div class="col-md-3">
+              <p class="download-button">
+                <button (click)="backToSubjects()">
+                  Back to Subjects <i class="icons-footer material-icons">arrow_back</i>
+                </button>
+              </p>
+            </div>
+            <div class="col-md-3">
+              <p class="download-button">
+                <button (click)="backToChrompacks()">
+                  Back to Chrompacks <i class="icons-footer material-icons">home</i>
+                </button>
+              </p>
+            </div>
+          </div>
+        </div>           
+  </div>
+</div>

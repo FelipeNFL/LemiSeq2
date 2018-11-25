@@ -1,0 +1,10 @@
+<div class="option-menu">
+  <h1> {{ title }}
+    <i class="material-icons close close-icon" (click)="close()">close</i>
+  </h1>
+  <div class="content">
+    <code class="nucleotides">
+      <p *ngFor="let line of sequenceLines"> {{ line }} </p>
+    </code>
+  </div>
+</div>

@@ -5,6 +5,7 @@ from flask_restful import Resource
 from flask_jwt_simple import jwt_required
 from core import defines
 from models.Chrompack import Chrompack
+from models.Subject import Subject
 from core.ManagerSubject import ManagerSubject
 
 
@@ -39,6 +40,20 @@ class ResourceBuildSubject(Resource):
             phrap_bin = defines.PHRAP_BIN
 
             manager_subject.build(ab1_list, phred_bin, phred_parameter_file, phd2fas_bin, phrap_bin)
+
+        except Exception as e:
+            logging.error(e)
+            return Response(json.dumps(str(e)), status=500)
+
+    @jwt_required
+    def get(self, id_chrompack, name):
+
+        try:
+            subject = Subject(id_chrompack, self._work_dir, name)
+            is_built = subject.is_built()
+            response_json = json.dumps(is_built)
+
+            return Response(response_json, status=200)
 
         except Exception as e:
             logging.error(e)

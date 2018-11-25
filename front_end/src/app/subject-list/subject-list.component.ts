@@ -1,4 +1,5 @@
-import { Component, OnInit, Output, EventEmitter, Input, ViewChild } from '@angular/core';
+import * as async from 'async';
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { NewSubjectComponent } from '../new-subject/new-subject.component';
 import { ChrompackServiceObservable } from '../services/chrompack-observable.service';
@@ -83,8 +84,35 @@ export class SubjectListComponent implements OnInit {
     this.router.navigateByUrl(`chrompack/${this.idChrompack}`);
   }
   view() {
-    this.subjectService.build(this.idChrompack,  this.selected).subscribe(() => {
-      this.alerts.success('Boa mlk');
-    }, err => { this.alerts.error("Errou", err)}  )
+
+    async.waterfall([
+      done => {
+        
+        this.subjectService.isBuilt(this.idChrompack, this.selected).subscribe(result => {
+          if (result) {
+            return done(null);
+          }
+          else {
+            return done();
+          }
+        },
+        err => done(err));
+      },
+      done => {
+        
+        this.subjectService.build(this.idChrompack, this.selected).subscribe(() => {
+          this.alerts.success('Subject assembled');
+          return done(null);
+        },
+        err => done(err));
+      }
+    ],
+    err => {
+      if (err) {
+        return this.alerts.error("There was an error while viewing mount", err);
+      }
+
+      this.router.navigateByUrl(`chrompack/${this.idChrompack}/subject/${this.selected}/assembly`);
+    });
   }
 }
